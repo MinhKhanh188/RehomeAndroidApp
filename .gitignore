@@ -1,0 +1,39 @@
+# Gradle files
+.gradle/
+**/build/
+local.properties
+/local.properties
+
+# Android Studio files
+*.iml
+.idea/
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+
+# macOS & Windows
+.DS_Store
+Thumbs.db
+
+# NDK & Native builds
+.externalNativeBuild/
+.cxx/
+
+# Output files
+*.apk
+*.ap_
+
+# Captures
+/captures/
+
+# Keystore (security)
+*.jks
+*.keystore
+
+# Logs & backups
+*.log
+*.tmp
+*.bak
