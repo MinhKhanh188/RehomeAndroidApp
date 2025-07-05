@@ -12,14 +12,17 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.rehomemobileapp.ui.fragment.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_market"
+        android:name="com.example.rehomemobileapp.ui.fragment.market.MarketFragment"
+        android:label="Market"
+        tools:layout="@layout/fragment_market" />
+
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.rehomemobileapp.ui.fragment.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
+
 </navigation>

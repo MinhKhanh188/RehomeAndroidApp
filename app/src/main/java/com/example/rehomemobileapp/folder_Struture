@@ -1,0 +1,275 @@
+
+app/src/main/AndroidManifest.xml
+
+app/src/main/java/com/example/rehomemobileapp/adapter/PostAdapter.java
+
+app/src/main/java/com/example/rehomemobileapp/data/SessionManager.java
+app/src/main/java/com/example/rehomemobileapp/socket/ChatSocketManager.java
+
+app/src/main/java/com/example/rehomemobileapp/network/ApiClient.java
+app/src/main/java/com/example/rehomemobileapp/network/ApiConstants.java
+app/src/main/java/com/example/rehomemobileapp/network/ApiConstants.java
+
+app/src/main/java/com/example/rehomemobileapp/ui/fragment/gallery/GalleryFragment.java
+app/src/main/java/com/example/rehomemobileapp/ui/fragment/gallery/GalleryViewModel.java
+
+app/src/main/java/com/example/rehomemobileapp/ui/fragment/home/HomeFragment.java
+app/src/main/java/com/example/rehomemobileapp/ui/fragment/home/HomeViewModel.java
+
+app/src/main/java/com/example/rehomemobileapp/ui/fragment/market/MarketFragment.java
+app/src/main/java/com/example/rehomemobileapp/ui/fragment/market/MarketViewModel.java
+
+app/src/main/java/com/example/rehomemobileapp/ui/fragment/slideshow/SlideshowFragment.java
+app/src/main/java/com/example/rehomemobileapp/ui/fragment/slideshow/SlideshowViewModel.java
+
+app/src/main/java/com/example/rehomemobileapp/utils/PermissionsHelper.java
+app/src/main/java/com/example/rehomemobileapp/MainActivity.java
+
+app/src/main/java/com/example/rehomemobileapp/model/User.java
+app/src/main/java/com/example/rehomemobileapp/model/Post.java
+app/src/main/java/com/example/rehomemobileapp/model/Category.java
+app/src/main/java/com/example/rehomemobileapp/model/Province.java
+app/src/main/java/com/example/rehomemobileapp/model/Message.java
+app/src/main/java/com/example/rehomemobileapp/model/SavedItem.java
+app/src/main/java/com/example/rehomemobileapp/model/CoinTransaction.java
+app/src/main/java/com/example/rehomemobileapp/model/Conversation.java
+
+app/src/main/res/drawable/ic_launcher_background.xml
+app/src/main/res/drawable/ic_launcher_foreground.xml
+app/src/main/res/drawable/ic_menu_camera.xml
+app/src/main/res/drawable/ic_menu_gallery.xml
+app/src/main/res/drawable/ic_menu_slideshow.xml
+app/src/main/res/drawable/side_nav_bar.xml
+
+app/src/main/res/layout/activity_main.xml
+app/src/main/res/layout/app_bar_main.xml
+app/src/main/res/layout/content_main.xml
+app/src/main/res/layout/fragment_gallery.xml
+app/src/main/res/layout/fragment_market.xml
+app/src/main/res/layout/item_product_card.xml
+app/src/main/res/layout/fragment_home.xml
+app/src/main/res/layout/fragment_slideshow.xml
+app/src/main/res/layout/nav_header_main.xml
+
+app/src/main/res/menu/activity_main_drawer.xml
+app/src/main/res/menu/main.xml
+
+app/src/main/res/mipmap-hdpi/ic_launcher.webp
+app/src/main/res/mipmap-mdpi/ic_launcher.webp
+app/src/main/res/mipmap-xhdpi/ic_launcher.webp
+app/src/main/res/mipmap-xxhdpi/ic_launcher.webp
+app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp
+app/src/main/res/mipmap-anydpi/ic_launcher.xml
+
+app/src/main/res/mipmap-hdpi/ic_launcher_round.webp
+app/src/main/res/mipmap-mdpi/ic_launcher_round.webp
+app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp
+app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp
+app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp
+app/src/main/res/mipmap-anydpi/ic_launcher_round.xml
+
+app/src/main/res/navigation/mobile_navigation.xml
+app/src/main/res/navigation/nav_graph.xml
+
+app/src/main/res/values/colors.xml
+
+app/src/main/res/values/dimens.xml
+app/src/main/res/values-land/dimens.xml
+app/src/main/res/values-w1240dp/dimens.xml
+app/src/main/res/values-w600dp/dimens.xml
+app/src/main/res/values/strings.xml
+app/src/main/res/values/themes.xml
+app/src/main/res/values-night/themes.xml
+
+app/src/main/res/xml/backup_rules.xml
+app/src/main/res/xml/data_extraction_rules.xml
+app/src/main/res/xml/network_security_config.xml
+
+
+API Integration
+
+
+
+| **React Route**                   | **Android Fragment / Activity**               |
+| --------------------------------- | --------------------------------------------- |
+| `/` *(Home)*                      | `HomeFragment`                                |
+| `/login`                          | `LoginFragment` or `LoginActivity`            |
+| `/register`                       | `RegisterFragment`                            |
+| `/forgotPassword`                 | `ForgotPasswordFragment`                      |
+| `/reset-password/:email`          | `ResetPasswordFragment`                       |
+| `/products`                       | `ProductsFragment` (listing all posts)        |
+| `/products/product-details/`      | `ProductDetailsFragment`                      |
+| `/payment`                        | `PaymentFragment`                             |
+| `/payment-confirmation`           | `PaymentConfirmationFragment`                 |
+| `/about-us`                       | `AboutUsFragment`                             |
+| `/contact`                        | `ContactFragment`                             |
+| `/please-login-first`             | `PleaseLoginFirstFragment`                    |
+| `/dashboard/*` *(user dashboard)* | `DashboardFragment` with nested fragments:    |
+|                                   | • `MyListingsFragment`                        |
+|                                   | • `ProductFormFragment` *(new listing)*       |
+|                                   | • `ChatFragment` *(chat with sellers/buyers)* |
+|                                   | • `ViewSavedPostFragment`                     |
+|                                   | • `AnalyticsFragment`                         |
+|                                   | • `PurchaseHistoryFragment`                   |
+|                                   | • `BuyCoinFragment`                           |
+|                                   | • `SettingsFragment`                          |
+| `/admin-login`                    | *(Can skip if not implementing admin in app)* |
+| `/admin/*` *(admin dashboard)*    | *(Likely out of scope for your mobile app)*   |
+
+
+
+Example: res/navigation/mobile_navigation.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/homeFragment">
+
+    <!-- Home -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.home.HomeFragment"
+        android:label="Home" />
+
+    <!-- Products List -->
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.products.ProductsFragment"
+        android:label="Products" />
+
+    <!-- Product Details -->
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.products.ProductDetailsFragment"
+        android:label="Product Details">
+        <argument
+            android:name="productId"
+            app:argType="string" />
+    </fragment>
+
+    <!-- Login -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.auth.LoginFragment"
+        android:label="Login" />
+
+    <!-- Register -->
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.auth.RegisterFragment"
+        android:label="Register" />
+
+    <!-- Forgot Password -->
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.auth.ForgotPasswordFragment"
+        android:label="Forgot Password" />
+
+    <!-- Reset Password -->
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.auth.ResetPasswordFragment"
+        android:label="Reset Password">
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
+
+    <!-- Dashboard (acts as container for nested screens) -->
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.dashboard.DashboardFragment"
+        android:label="Dashboard" />
+
+    <!-- About Us -->
+    <fragment
+        android:id="@+id/aboutUsFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.about.AboutUsFragment"
+        android:label="About Us" />
+
+    <!-- Contact -->
+    <fragment
+        android:id="@+id/contactFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.about.ContactFragment"
+        android:label="Contact" />
+
+    <!-- Please Login First -->
+    <fragment
+        android:id="@+id/pleaseLoginFirstFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.auth.PleaseLoginFirstFragment"
+        android:label="Please Login First" />
+
+    <!-- Payment -->
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.payment.PaymentFragment"
+        android:label="Payment" />
+
+    <!-- Payment Confirmation -->
+    <fragment
+        android:id="@+id/paymentConfirmationFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.payment.PaymentConfirmationFragment"
+        android:label="Payment Confirmation" />
+</navigation>
+
+
+
+MainActivity
+  ↳ NavHostFragment (main app nav)
+      ↳ DashboardFragment
+          ↳ NavHostFragment (dashboard nav)
+              ↳ MyListingsFragment, ProductFormFragment, ChatFragment, etc.
+
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/myListingsFragment">
+
+    <!-- My Listings -->
+    <fragment
+        android:id="@+id/myListingsFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.dashboard.MyListingsFragment"
+        android:label="My Listings" />
+
+    <!-- New Listing -->
+    <fragment
+        android:id="@+id/productFormFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.dashboard.ProductFormFragment"
+        android:label="New Listing" />
+
+    <!-- Chat -->
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.dashboard.ChatFragment"
+        android:label="Chat" />
+
+    <!-- View Saved Posts -->
+    <fragment
+        android:id="@+id/viewSavedPostFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.dashboard.ViewSavedPostFragment"
+        android:label="Saved Posts" />
+
+    <!-- Analytics -->
+    <fragment
+        android:id="@+id/analyticsFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.dashboard.AnalyticsFragment"
+        android:label="Analytics" />
+
+    <!-- Purchase History -->
+    <fragment
+        android:id="@+id/purchaseHistoryFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.dashboard.PurchaseHistoryFragment"
+        android:label="Purchase History" />
+
+    <!-- Buy Coin -->
+    <fragment
+        android:id="@+id/buyCoinFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.dashboard.BuyCoinFragment"
+        android:label="Buy Coin" />
+
+    <!-- Settings -->
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.rehomemobileapp.ui.fragment.dashboard.SettingsFragment"
+        android:label="Settings" />
+</navigation>
