@@ -6,17 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/text_home"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
+
+
+        <!-- Section title -->
+        <TextView
+            android:id="@+id/recentProductsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mới thêm gần đây"
+            android:textSize="20sp"
+            android:padding="16dp"
+            android:textStyle="bold" />
+
+        <!-- RecyclerView for products -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerRecentProducts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Benefits section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tại sao nên chọn đồ cũ?"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="16dp" />
+
+        <!-- Add more sections here as needed -->
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

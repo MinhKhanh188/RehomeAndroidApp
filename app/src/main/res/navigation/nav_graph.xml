@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.rehomemobileapp.ui.fragment.home.HomeFragment"
+        android:label="Home" />
+
+    <fragment
+        android:id="@+id/nav_market"
+        android:name="com.example.rehomemobileapp.ui.fragment.market.MarketFragment"
+        android:label="Market" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.rehomemobileapp.ui.fragment.profile.ProfileFragment"
+        android:label="Profile" />
+</navigation>
