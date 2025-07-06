@@ -42,57 +42,102 @@
             android:text="Đã có tài khoản? Đăng nhập"/>
 
         <!-- Name -->
+        <TextView
+            android:id="@+id/textViewNameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewSubtitle"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:text="Tên của bạn:"
+            android:textColor="#000000"
+            android:textSize="14sp"/>
+
+        <!-- Email -->
         <EditText
-            android:id="@+id/editTextName"
+            android:id="@+id/registerEditTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewSubtitle"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginTop="24dp"
             android:hint="Nhập Tên Của Bạn"
             android:padding="12dp"
             android:textColor="#000000"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
-        <!-- Email -->
+        <TextView
+            android:id="@+id/textViewEmailLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/registerEditTextName"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:text="Email của bạn:"
+            android:textColor="#000000"
+            android:textSize="14sp"/>
+
+
         <EditText
-            android:id="@+id/editTextEmail"
+            android:id="@+id/registerEditTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/editTextName"
+            android:layout_below="@id/registerEditTextName"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="26dp"
             android:hint="Địa chỉ gmail của bạn"
             android:padding="12dp"
             android:textColor="#000000"
             android:textSize="16sp"/>
 
         <!-- Password -->
+        <TextView
+            android:id="@+id/textViewPasswordLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/registerEditTextEmail"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:text="Mật khẩu"
+            android:textColor="#000000"
+            android:textSize="14sp"/>
+
         <EditText
-            android:id="@+id/editTextPassword"
+            android:id="@+id/registerEditTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/editTextEmail"
+            android:layout_below="@id/registerEditTextEmail"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginTop="16dp"
-            android:hint="Mật Khẩu Của Bạn"
+            android:layout_marginTop="26dp"
+            android:hint="Mật Khẩu Của Bạn:"
             android:padding="12dp"
             android:inputType="textPassword"
             android:textColor="#000000"
             android:textSize="16sp"/>
 
         <!-- Confirm Password -->
+        <TextView
+            android:id="@+id/textViewConfirmPasswordLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/registerEditTextPassword"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:text="Xác nhận mật khẩu:"
+            android:textColor="#000000"
+            android:textSize="14sp"/>
+
         <EditText
-            android:id="@+id/editTextConfirmPassword"
+            android:id="@+id/registerEditTextConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/editTextPassword"
+            android:layout_below="@id/registerEditTextPassword"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="26dp"
             android:hint="Nhập Lại Mật Khẩu Của Bạn"
             android:padding="12dp"
             android:inputType="textPassword"
@@ -104,7 +149,7 @@
             android:id="@+id/textViewTerms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/editTextConfirmPassword"
+            android:layout_below="@id/registerEditTextConfirmPassword"
             android:layout_marginTop="16dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"

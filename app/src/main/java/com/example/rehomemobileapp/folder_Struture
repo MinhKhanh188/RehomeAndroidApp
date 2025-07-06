@@ -1,6 +1,7 @@
 app/src/main/AndroidManifest.xml
 
 app/src/main/java/com/example/rehomemobileapp/activities/LoginActivity.java
+app/src/main/java/com/example/rehomemobileapp/activities/RegisterActivity.java
 
 app/src/main/java/com/example/rehomemobileapp/adapter/PostAdapter.java
 

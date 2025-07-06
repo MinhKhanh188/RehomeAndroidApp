@@ -51,6 +51,17 @@
             android:layout_marginTop="32dp"
             android:visibility="gone"/>
 
+        <TextView
+            android:id="@+id/textViewEmailLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewSubtitle"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:text="Nhập Email của bạn"
+            android:textColor="#000000"
+            android:textSize="14sp"/>
+
 
         <EditText
             android:id="@+id/loginEditTextEmail"
@@ -59,25 +70,38 @@
             android:layout_below="@id/textViewSubtitle"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="39dp"
             android:hint="Email"
             android:padding="12dp"
             android:textColor="#000000"
             android:textSize="16sp"/>
 
+        <TextView
+            android:id="@+id/textViewPasswordLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/loginEditTextEmail"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="Nhập Mật khẩu của bạn"
+            android:textColor="#000000"
+            android:textSize="14sp"/>
+
+
         <EditText
             android:id="@+id/loginEditTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/loginEditTextEmail"
+            android:layout_below="@id/textViewPasswordLabel"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:hint="Password"
             android:padding="12dp"
             android:inputType="textPassword"
             android:textColor="#000000"
             android:textSize="16sp"/>
+
 
         <Button
             android:id="@+id/buttonLogin"

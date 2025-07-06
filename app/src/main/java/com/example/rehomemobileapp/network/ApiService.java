@@ -13,16 +13,27 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Field;
 
 public interface ApiService {
-    @GET("/api/posts/province")
+    @GET(ApiConstants.GET_POST_BY_PROVINCE)
     Call<List<Post>> getPostsByProvince(
             @Query("province") String province
     );
 
+    // Login
     @POST(ApiConstants.LOGIN)
     @FormUrlEncoded
     Call<LoginResponse> login(
             @Field("email") String email,
             @Field("password") String password
     );
+
+    // Register
+    @POST("/api/users/register")
+    @FormUrlEncoded
+    Call<LoginResponse> register(
+            @Field("name") String name,
+            @Field("email") String email,
+            @Field("password") String password
+    );
+
 
 }

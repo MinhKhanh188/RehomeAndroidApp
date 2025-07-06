@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +28,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailInput, passwordInput;
     private Button loginButton;
     private ProgressBar progressBar;
+    private TextView registerNowText;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,13 @@ public class LoginActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.loginEditTextPassword);
         loginButton = findViewById(R.id.buttonLogin);
         progressBar = findViewById(R.id.loadingIndicator);
+        registerNowText = findViewById(R.id.textViewRegisterNow);
+
+        registerNowText.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        });
+
 
         loginButton.setOnClickListener(v -> {
             String email = emailInput.getText().toString().trim();
