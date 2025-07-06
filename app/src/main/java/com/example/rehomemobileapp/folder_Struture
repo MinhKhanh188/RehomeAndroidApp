@@ -1,10 +1,13 @@
-
 app/src/main/AndroidManifest.xml
+
+app/src/main/java/com/example/rehomemobileapp/activities/LoginActivity.java
 
 app/src/main/java/com/example/rehomemobileapp/adapter/PostAdapter.java
 
 app/src/main/java/com/example/rehomemobileapp/data/SessionManager.java
 app/src/main/java/com/example/rehomemobileapp/socket/ChatSocketManager.java
+
+app/src/main/java/com/example/rehomemobileapp/network/response/LoginResponse.java
 
 app/src/main/java/com/example/rehomemobileapp/network/ApiClient.java
 app/src/main/java/com/example/rehomemobileapp/network/ApiConstants.java
@@ -23,7 +26,9 @@ app/src/main/java/com/example/rehomemobileapp/ui/fragment/slideshow/SlideshowFra
 app/src/main/java/com/example/rehomemobileapp/ui/fragment/slideshow/SlideshowViewModel.java
 
 app/src/main/java/com/example/rehomemobileapp/utils/PermissionsHelper.java
+
 app/src/main/java/com/example/rehomemobileapp/MainActivity.java
+app/src/main/java/com/example/rehomemobileapp/SplashActivity.java
 
 app/src/main/java/com/example/rehomemobileapp/model/User.java
 app/src/main/java/com/example/rehomemobileapp/model/Post.java
@@ -40,6 +45,10 @@ app/src/main/res/drawable/ic_menu_camera.xml
 app/src/main/res/drawable/ic_menu_gallery.xml
 app/src/main/res/drawable/ic_menu_slideshow.xml
 app/src/main/res/drawable/side_nav_bar.xml
+app/src/main/res/drawable/ic_google_logo.jpg
+app/src/main/res/drawable/input_white_background.xml
+app/src/main/res/drawable/main_orange_background.xml
+app/src/main/res/drawable/ic_rehome_logo.png
 
 app/src/main/res/layout/activity_main.xml
 app/src/main/res/layout/app_bar_main.xml
@@ -50,6 +59,9 @@ app/src/main/res/layout/item_product_card.xml
 app/src/main/res/layout/fragment_home.xml
 app/src/main/res/layout/fragment_slideshow.xml
 app/src/main/res/layout/nav_header_main.xml
+app/src/main/res/layout/activity_login.xml
+app/src/main/res/layout/activity_register.xml
+app/src/main/res/layout/activity_splash.xml
 
 app/src/main/res/menu/activity_main_drawer.xml
 app/src/main/res/menu/main.xml
@@ -72,6 +84,7 @@ app/src/main/res/navigation/mobile_navigation.xml
 app/src/main/res/navigation/nav_graph.xml
 
 app/src/main/res/values/colors.xml
+app/src/main/res/values/styles.xml
 
 app/src/main/res/values/dimens.xml
 app/src/main/res/values-land/dimens.xml
