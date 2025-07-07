@@ -7,6 +7,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.POST;
 import retrofit2.http.FormUrlEncoded;
@@ -34,6 +35,9 @@ public interface ApiService {
             @Field("email") String email,
             @Field("password") String password
     );
+
+    @GET(ApiConstants.GET_POST_DETAIL_BY_ID + "/{id}")
+    Call<Post> getPostDetail(@Path("id") String id);
 
 
 }

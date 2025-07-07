@@ -2,8 +2,12 @@
     android:shape="rectangle">
     <gradient
         android:angle="135"
-        android:centerColor="#009688"
-        android:endColor="#00695C"
-        android:startColor="#4DB6AC"
+        android:centerColor="#FF9100"
+        android:endColor="#FF5722"
+        android:startColor="#FFCA28"
         android:type="linear" />
+    <stroke
+        android:width="2dp"
+        android:color="#FFFF00" /> <!-- Neon yellow outline for extra glow -->
+    <corners android:radius="8dp" /> <!-- Optional rounded corners -->
 </shape>

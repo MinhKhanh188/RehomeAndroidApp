@@ -2,8 +2,10 @@ app/src/main/AndroidManifest.xml
 
 app/src/main/java/com/example/rehomemobileapp/activities/LoginActivity.java
 app/src/main/java/com/example/rehomemobileapp/activities/RegisterActivity.java
+app/src/main/java/com/example/rehomemobileapp/activities/PostDetailActivity.java
 
 app/src/main/java/com/example/rehomemobileapp/adapter/PostAdapter.java
+app/src/main/java/com/example/rehomemobileapp/adapter/ImageAdapter.java
 
 app/src/main/java/com/example/rehomemobileapp/data/SessionManager.java
 app/src/main/java/com/example/rehomemobileapp/socket/ChatSocketManager.java
@@ -50,6 +52,7 @@ app/src/main/res/drawable/ic_google_logo.jpg
 app/src/main/res/drawable/input_white_background.xml
 app/src/main/res/drawable/main_orange_background.xml
 app/src/main/res/drawable/ic_rehome_logo.png
+app/src/main/res/drawable/main_white_background.xml
 
 app/src/main/res/layout/activity_main.xml
 app/src/main/res/layout/app_bar_main.xml
@@ -63,6 +66,8 @@ app/src/main/res/layout/nav_header_main.xml
 app/src/main/res/layout/activity_login.xml
 app/src/main/res/layout/activity_register.xml
 app/src/main/res/layout/activity_splash.xml
+app/src/main/res/layout/activity_post_detail.xml
+app/src/main/res/layout/item_post_image.xml
 
 app/src/main/res/menu/activity_main_drawer.xml
 app/src/main/res/menu/main.xml

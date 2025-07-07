@@ -1,5 +1,6 @@
 package com.example.rehomemobileapp.ui.fragment.market;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rehomemobileapp.R;
+import com.example.rehomemobileapp.activities.PostDetailActivity;
 import com.example.rehomemobileapp.adapter.PostAdapter;
 import com.example.rehomemobileapp.model.Post;
 
@@ -38,11 +41,15 @@ public class MarketFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerMarket);
         loadingIndicator = view.findViewById(R.id.marketLoading);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
 
         postAdapter = new PostAdapter(new ArrayList<>(), post -> {
-            Toast.makeText(getContext(), "Clicked: " + post.getName(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(), PostDetailActivity.class);
+            intent.putExtra("POST_ID", post.getId());
+            startActivity(intent);
         });
+
         recyclerView.setAdapter(postAdapter);
 
         viewModel = new ViewModelProvider(this).get(MarketViewModel.class);
