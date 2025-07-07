@@ -10,4 +10,14 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+
+    <string name="chat_list_title">Đoạn chat</string>
+    <string name="message_hint">Nhập tin nhắn...</string>
+    <string name="send_button_description">Gửi tin nhắn</string>
+    <string name="no_message_yet">No message yet</string>
+    <string name="yesterday">Hôm qua</string>
+    <string name="just_now">Vừa xong</string>
+    <string name="minutes_ago">phút trước</string>
+    <string name="hours_ago">giờ trước</string>
+    <string name="days_ago">ngày trước</string>
 </resources>
