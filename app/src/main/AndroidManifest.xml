@@ -33,6 +33,11 @@
             android:exported="true"
             android:theme="@style/Theme.ReHomeMobileApp.NoActionBar"/>
 
+        <activity android:name=".activities.RegisterActivity"
+            android:exported="true"
+            android:theme="@style/Theme.ReHomeMobileApp.NoActionBar"/>
+
+        <activity android:name=".activities.PostDetailActivity" />
 
         <activity
             android:name=".MainActivity"
