@@ -9,10 +9,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 
 import com.example.rehomemobileapp.R;
 import com.example.rehomemobileapp.adapter.ImageAdapter;
+import com.example.rehomemobileapp.adapter.MainImagePagerAdapter;
 import com.example.rehomemobileapp.data.SessionManager;
 import com.example.rehomemobileapp.model.Post;
 import com.example.rehomemobileapp.network.ApiClient;
@@ -38,9 +40,18 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private String sellerId;
 
+    private ImageView mainProductImage;
+    private ViewPager2 mainImagePager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Hide the Action Bar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         setContentView(R.layout.activity_post_detail);
 
         productImagesRecycler = findViewById(R.id.productImagesRecycler);
@@ -48,6 +59,12 @@ public class PostDetailActivity extends AppCompatActivity {
         productPrice = findViewById(R.id.productPrice);
         productDescription = findViewById(R.id.productDescription);
         buttonChat = findViewById(R.id.buttonChat);
+        mainImagePager = findViewById(R.id.mainImagePager);
+        productImagesRecycler = findViewById(R.id.productImagesRecycler);
+
+
+
+
 
         String postId = getIntent().getStringExtra("POST_ID");
 
@@ -72,12 +89,23 @@ public class PostDetailActivity extends AppCompatActivity {
 
                             // Load  image
                             if (post.getImages() != null && !post.getImages().isEmpty()) {
+                                // Setup main ViewPager
+                                MainImagePagerAdapter pagerAdapter = new MainImagePagerAdapter(post.getImages());
+                                mainImagePager.setAdapter(pagerAdapter);
+
+                                // Setup sub-image RecyclerView
                                 productImagesRecycler.setLayoutManager(
                                         new LinearLayoutManager(PostDetailActivity.this, LinearLayoutManager.HORIZONTAL, false)
                                 );
-                                ImageAdapter adapter = new ImageAdapter(post.getImages());
+                                ImageAdapter adapter = new ImageAdapter(post.getImages(), position -> {
+                                    // When sub-image clicked, change ViewPager current item
+                                    mainImagePager.setCurrentItem(position, true);
+                                });
                                 productImagesRecycler.setAdapter(adapter);
                             }
+
+
+
 
 
                             sellerId = post.getSellerId();
