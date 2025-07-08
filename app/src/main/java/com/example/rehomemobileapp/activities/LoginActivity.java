@@ -3,6 +3,7 @@ package com.example.rehomemobileapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     String token = response.body().getToken();
                     User user = response.body().getUser();
+                    Log.d("DEBUG", "User name = " + user.getName());
+
 
                     // Save to SessionManager
                     SessionManager.saveAuthToken(LoginActivity.this, token);

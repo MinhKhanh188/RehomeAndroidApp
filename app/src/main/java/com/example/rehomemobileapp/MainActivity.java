@@ -3,7 +3,9 @@ package com.example.rehomemobileapp;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
+import com.example.rehomemobileapp.data.SessionManager;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -28,6 +30,24 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Load user info from SessionManager
+        NavigationView navigationView = binding.navView;
+        View headerView = navigationView.getHeaderView(0);
+        TextView textName = headerView.findViewById(R.id.textViewUserName);
+        TextView textVerified = headerView.findViewById(R.id.textViewVerified);
+
+        String name = SessionManager.getUserName(this);
+        boolean isVerified = SessionManager.getIsVerified(this);
+
+        textName.setText(name);
+        if (isVerified) {
+            textVerified.setVisibility(View.GONE);
+        } else {
+            textVerified.setVisibility(View.VISIBLE);
+            textVerified.setText("Người dùng chưa xác thực");
+        }
+
+        // Setup toolbar and nav
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,10 +57,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAnchorView(R.id.fab).show();
             }
         });
+
         DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_market, R.id.nav_slideshow)
                 .setOpenableLayout(drawer)
@@ -52,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }

@@ -14,8 +14,16 @@
         android:name="com.example.rehomemobileapp.ui.fragment.market.MarketFragment"
         android:label="Market" />
 
-    <fragment
-        android:id="@+id/nav_profile"
-        android:name="com.example.rehomemobileapp.ui.fragment.profile.ProfileFragment"
-        android:label="Profile" />
+<!--    <fragment-->
+<!--        android:id="@+id/nav_my_listings"-->
+<!--        android:name="com.example.rehomemobileapp.ui.fragment.mylistings.MyListingsFragment"-->
+<!--        android:label="My Listings" />-->
+
+
+    <!--    <fragment-->
+<!--        android:id="@+id/nav_profile"-->
+<!--        android:name="com.example.rehomemobileapp.ui.fragment.profile.ProfileFragment"-->
+<!--        android:label="Profile" />-->
+
+
 </navigation>
