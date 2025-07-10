@@ -3,7 +3,14 @@ package com.example.rehomemobileapp.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.rehomemobileapp.model.Category;
+import com.example.rehomemobileapp.model.Province;
 import com.example.rehomemobileapp.model.User;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class SessionManager {
     public static void saveAuthToken(Context context, String token) {
@@ -34,6 +41,33 @@ public class SessionManager {
         return prefs.getBoolean("user_verified", false);
     }
 
+    // In SessionManager.java
+
+    public static void saveCategories(Context context, List<Category> categories) {
+        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        prefs.edit().putString("categories_json", gson.toJson(categories)).apply();
+    }
+
+    public static List<Category> getCategories(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        String json = prefs.getString("categories_json", "[]");
+        Type type = new TypeToken<List<Category>>() {}.getType();
+        return new Gson().fromJson(json, type);
+    }
+
+    public static void saveProvinces(Context context, List<Province> provinces) {
+        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        prefs.edit().putString("provinces_json", gson.toJson(provinces)).apply();
+    }
+
+    public static List<Province> getProvinces(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        String json = prefs.getString("provinces_json", "[]");
+        Type type = new TypeToken<List<Province>>() {}.getType();
+        return new Gson().fromJson(json, type);
+    }
 
 
 }
