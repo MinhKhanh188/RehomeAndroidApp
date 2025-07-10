@@ -12,6 +12,7 @@
             android:id="@+id/nav_market"
             android:title="Market"
             android:icon="@android:drawable/ic_menu_agenda" />
+
         <item
             android:id="@+id/nav_chat"
             android:icon="@android:drawable/ic_menu_send"
@@ -21,8 +22,20 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Profile" />
         <item
+            android:id="@+id/nav_my_listings"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="My Listings" />
+        <item
             android:id="@+id/nav_logout"
             android:icon="@android:drawable/ic_lock_power_off"
             android:title="Đăng xuất" />
+
+
+
+        <!--        <item-->
+<!--            android:id="@+id/nav_slideshow"-->
+<!--            android:icon="@drawable/ic_menu_slideshow"-->
+<!--            android:title="Profile" />-->
+
     </group>
 </menu>

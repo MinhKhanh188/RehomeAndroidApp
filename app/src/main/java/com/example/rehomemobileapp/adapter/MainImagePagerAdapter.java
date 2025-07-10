@@ -1,7 +1,5 @@
 package com.example.rehomemobileapp.adapter;
 
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -9,38 +7,33 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.rehomemobileapp.R;
 
 import java.util.List;
 
-public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
-
-    public interface OnImageClickListener {
-        void onImageClick(int position);
-    }
+public class MainImagePagerAdapter extends RecyclerView.Adapter<MainImagePagerAdapter.ImageViewHolder> {
 
     private List<String> imageUrls;
-    private OnImageClickListener listener;
 
-    public ImageAdapter(List<String> imageUrls, OnImageClickListener listener) {
+    public MainImagePagerAdapter(List<String> imageUrls) {
         this.imageUrls = imageUrls;
-        this.listener = listener;
     }
-
 
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_post_image, parent, false);
-        return new ImageViewHolder(view);
+        ImageView imageView = new ImageView(parent.getContext());
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        ));
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        return new ImageViewHolder(imageView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        String url = imageUrls.get(position);
         Glide.with(holder.imageView.getContext())
-                .load(url)
+                .load(imageUrls.get(position))
                 .into(holder.imageView);
     }
 
@@ -51,9 +44,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     static class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        public ImageViewHolder(@NonNull View itemView) {
+
+        public ImageViewHolder(@NonNull ImageView itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.imageViewItem);
+            this.imageView = itemView;
         }
     }
 }

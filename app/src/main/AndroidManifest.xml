@@ -4,6 +4,8 @@
 
     <!-- 🚀 ADD THIS LINE -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:name=".MyApp"
@@ -39,6 +41,10 @@
             android:theme="@style/Theme.ReHomeMobileApp.NoActionBar"/>
 
         <activity android:name=".activities.PostDetailActivity" />
+
+        <activity android:name=".activities.UploadPostActivity" />
+
+
         <activity android:name=".activities.ChatActivity" />
         <activity android:name=".activities.ChatListActivity" />
         <activity

@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.example.rehomemobileapp.activities.ChatActivity;
 import com.example.rehomemobileapp.activities.ChatListActivity;
 import com.example.rehomemobileapp.activities.LoginActivity;
+import com.example.rehomemobileapp.activities.UploadPostActivity;
+import com.example.rehomemobileapp.data.SessionManager;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -32,17 +35,40 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.fab).show();
-            }
-        });
-        DrawerLayout drawer = binding.drawerLayout;
+        // Load user info from SessionManager
         NavigationView navigationView = binding.navView;
+        View headerView = navigationView.getHeaderView(0);
+        TextView textName = headerView.findViewById(R.id.textViewUserName);
+        TextView textVerified = headerView.findViewById(R.id.textViewVerified);
+
+        String name = SessionManager.getUserName(this);
+        boolean isVerified = SessionManager.getIsVerified(this);
+
+        textName.setText(name);
+        if (isVerified) {
+            textVerified.setVisibility(View.GONE);
+        } else {
+            textVerified.setVisibility(View.VISIBLE);
+            textVerified.setText("Người dùng chưa xác thực");
+        }
+
+        // Setup toolbar and nav
+        setSupportActionBar(binding.appBarMain.toolbar);
+
+        // 🟠 Mail icon FAB click
+        binding.appBarMain.fab.setOnClickListener(view -> {
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null)
+                    .setAnchorView(R.id.fab).show();
+        });
+
+        // 🟢 Plus icon overlay click → Open UploadPostActivity
+        findViewById(R.id.icon_add_overlay).setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, UploadPostActivity.class);
+            startActivity(intent);
+        });
+
+        DrawerLayout drawer = binding.drawerLayout;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
