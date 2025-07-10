@@ -1,10 +1,12 @@
 package com.example.rehomemobileapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
 
+import com.example.rehomemobileapp.activities.UploadPostActivity;
 import com.example.rehomemobileapp.data.SessionManager;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -49,13 +51,18 @@ public class MainActivity extends AppCompatActivity {
 
         // Setup toolbar and nav
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.fab).show();
-            }
+
+        // 🟠 Mail icon FAB click
+        binding.appBarMain.fab.setOnClickListener(view -> {
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null)
+                    .setAnchorView(R.id.fab).show();
+        });
+
+        // 🟢 Plus icon overlay click → Open UploadPostActivity
+        findViewById(R.id.icon_add_overlay).setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, UploadPostActivity.class);
+            startActivity(intent);
         });
 
         DrawerLayout drawer = binding.drawerLayout;

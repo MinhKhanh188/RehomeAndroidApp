@@ -3,6 +3,7 @@ app/src/main/AndroidManifest.xml
 app/src/main/java/com/example/rehomemobileapp/activities/LoginActivity.java
 app/src/main/java/com/example/rehomemobileapp/activities/RegisterActivity.java
 app/src/main/java/com/example/rehomemobileapp/activities/PostDetailActivity.java
+app/src/main/java/com/example/rehomemobileapp/activities/UploadPostActivity.java
 
 app/src/main/java/com/example/rehomemobileapp/adapter/PostAdapter.java
 app/src/main/java/com/example/rehomemobileapp/adapter/ImageAdapter.java
@@ -33,6 +34,7 @@ com/example/rehomemobileapp/ui/fragment/mylistings/MyListingsFragment.java
 app/src/main/java/com/example/rehomemobileapp/ui/fragment/slideshow/SlideshowFragment.java
 app/src/main/java/com/example/rehomemobileapp/ui/fragment/slideshow/SlideshowViewModel.java
 
+app/src/main/java/com/example/rehomemobileapp/utils/FileUtils.java
 app/src/main/java/com/example/rehomemobileapp/utils/PermissionsHelper.java
 
 app/src/main/java/com/example/rehomemobileapp/MainActivity.java
@@ -61,6 +63,7 @@ app/src/main/res/drawable/main_white_background.xml
 app/src/main/res/drawable/baseline_arrow_drop_down_circle_24.xml
 app/src/main/res/drawable/broken_image_1.jpg
 app/src/main/res/drawable/ic_arrow_back.xml
+app/src/main/res/drawable/fab_overlay_background.xml
 
 app/src/main/res/layout/activity_main.xml
 app/src/main/res/layout/app_bar_main.xml
@@ -78,6 +81,7 @@ app/src/main/res/layout/activity_post_detail.xml
 app/src/main/res/layout/item_post_image.xml
 app/src/main/res/layout/fragment_my_listings.xml
 app/src/main/res/layout/item_my_listing.xml
+app/src/main/res/layout/activity_upload_post.xml
 
 app/src/main/res/menu/activity_main_drawer.xml
 app/src/main/res/menu/main.xml
