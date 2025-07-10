@@ -48,7 +48,6 @@ public class ChatListActivity extends AppCompatActivity {
 
     private void initData() {
         currentUserId = SessionManager.getUserId(getApplicationContext());
-
         String debugAuthToken = SessionManager.getAuthToken(getApplicationContext());
         Log.d(TAG, "Debug: Auth Token from SessionManager: " + (debugAuthToken != null ? debugAuthToken : "NULL"));
         Log.d(TAG, "Debug: User ID from SessionManager: " + (currentUserId != null ? currentUserId : "NULL"));
