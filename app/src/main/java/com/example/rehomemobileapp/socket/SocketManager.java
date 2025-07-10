@@ -1,5 +1,6 @@
 package com.example.rehomemobileapp.socket;
 import com.example.rehomemobileapp.model.Message;
+import com.example.rehomemobileapp.network.ApiConstants;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -24,8 +25,8 @@ public class SocketManager {
 
     private SocketManager() {
         try {
-            // Replace with your backend URL
-            mSocket = IO.socket("http://localhost:5000"); // This needs to be the actual backend URL
+            // Sử dụng URL backend thực tế từ ApiConstants
+            mSocket = IO.socket(ApiConstants.BASE_URL);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }

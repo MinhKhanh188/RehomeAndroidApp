@@ -3,140 +3,101 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:background="#f5f5f5">
+    android:orientation="vertical"
+    android:background="#f8f8f8">
 
-    <!-- Left Sidebar - Chat List -->
+    <!-- Chat Header -->
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
+        android:id="@+id/layoutChatHeader"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
         android:background="#ffffff"
-        android:elevation="2dp">
+        android:elevation="1dp">
 
-        <!-- Header -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="16dp"
-            android:background="#ffffff"
-            android:elevation="1dp">
+        <!-- Back Button -->
+        <ImageButton
+            android:id="@+id/buttonBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Quay lại"
+            android:scaleType="center" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đoạn chat"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#333333" />
+        <!-- User Avatar -->
+        <TextView
+            android:id="@+id/textViewUserAvatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/circle_background"
+            android:gravity="center"
+            android:text="PT"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-        </LinearLayout>
-
-        <!-- Chat List -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewChatList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="8dp"
-            android:clipToPadding="false" />
+        <!-- User Name -->
+        <TextView
+            android:id="@+id/textViewUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Phạm Minh Tùng"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#333333" />
 
     </LinearLayout>
 
-    <!-- Right Side - Chat Messages -->
+    <!-- Messages RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMessages"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:clipToPadding="false" />
+
+    <!-- Message Input Area -->
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:orientation="vertical"
-        android:background="#f8f8f8">
+        android:id="@+id/layoutMessageInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="#ffffff"
+        android:gravity="center_vertical">
 
-        <!-- Chat Header -->
-        <LinearLayout
-            android:id="@+id/layoutChatHeader"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="16dp"
-            android:background="#ffffff"
-            android:elevation="1dp"
-            android:visibility="gone">
-
-            <!-- User Avatar -->
-            <TextView
-                android:id="@+id/textViewUserAvatar"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/circle_background"
-                android:gravity="center"
-                android:text="PT"
-                android:textColor="#ffffff"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <!-- User Name -->
-            <TextView
-                android:id="@+id/textViewUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="Phạm Minh Tùng"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#333333" />
-
-        </LinearLayout>
-
-        <!-- Messages RecyclerView -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewMessages"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <EditText
+            android:id="@+id/editTextMessage"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
             android:layout_weight="1"
-            android:padding="16dp"
-            android:clipToPadding="false" />
+            android:background="@drawable/message_input_background"
+            android:hint="Nhập tin nhắn..."
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:textSize="14sp"
+            android:textColorHint="#999999"
+            android:textColor="#333333"
+            android:maxLines="3"
+            android:inputType="textMultiLine|textCapSentences" />
 
-        <!-- Message Input Area -->
-        <LinearLayout
-            android:id="@+id/layoutMessageInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:background="#ffffff"
-            android:gravity="center_vertical"
-            android:visibility="gone">
-
-            <EditText
-                android:id="@+id/editTextMessage"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:background="@drawable/message_input_background"
-                android:hint="Nhập tin nhắn..."
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="12dp"
-                android:textSize="14sp"
-                android:textColorHint="#999999"
-                android:textColor="#333333"
-                android:maxLines="3"
-                android:inputType="textMultiLine|textCapSentences" />
-
-            <ImageButton
-                android:id="@+id/buttonSend"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="12dp"
-                android:background="@drawable/send_button_background"
-                android:src="@drawable/ic_send"
-                android:contentDescription="Gửi tin nhắn"
-                android:scaleType="center" />
-
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/buttonSend"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/send_button_background"
+            android:src="@drawable/ic_send"
+            android:contentDescription="Gửi tin nhắn"
+            android:scaleType="center" />
 
     </LinearLayout>
 
 </LinearLayout>
+

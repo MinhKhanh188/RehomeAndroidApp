@@ -1,9 +1,13 @@
 package com.example.rehomemobileapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.rehomemobileapp.activities.ChatActivity;
+import com.example.rehomemobileapp.activities.ChatListActivity;
+import com.example.rehomemobileapp.activities.LoginActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -42,12 +46,32 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_market, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_market, R.id.nav_slideshow, R.id.nav_chat)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_chat) {
+                Intent intent = new Intent(MainActivity.this, ChatListActivity.class);
+                startActivity(intent);
+                drawer.closeDrawers(); // Close the drawer after selection
+                return true;
+            } else if (id == R.id.nav_logout) {
+                // Xóa session và chuyển về màn hình đăng nhập
+                com.example.rehomemobileapp.data.SessionManager.clearSession(MainActivity.this);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các activity trước đó
+                startActivity(intent);
+                finish();
+                drawer.closeDrawers();
+                return true;
+            } else {
+                return NavigationUI.onNavDestinationSelected(item, navController);
+            }
+        });
     }
 
     @Override

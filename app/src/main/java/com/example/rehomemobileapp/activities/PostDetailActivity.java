@@ -43,6 +43,7 @@ public class PostDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
 
+
         productImagesRecycler = findViewById(R.id.productImagesRecycler);
         productTitle = findViewById(R.id.productTitle);
         productPrice = findViewById(R.id.productPrice);
@@ -53,8 +54,10 @@ public class PostDetailActivity extends AppCompatActivity {
 
         fetchPostDetail(postId);
 
-//        buttonChat.setOnClickListener(v -> startChat());
+        buttonChat.setOnClickListener(v -> startChat());
     }
+
+
 
     private void fetchPostDetail(String id) {
         String token = SessionManager.getAuthToken(this);
@@ -90,34 +93,14 @@ public class PostDetailActivity extends AppCompatActivity {
                     }
                 });
     }
+    private void startChat() {
+        if (sellerId == null) {
+            Toast.makeText(this, "Không có thông tin người bán", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-//    private void startChat() {
-//        if (sellerId == null) {
-//            Toast.makeText(this, "Không có thông tin người bán", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        String token = SessionManager.getAuthToken(this);
-//
-//        ApiClient.getApiService()
-//                .joinConversation(new JoinConversationRequest(sellerId))
-//                .enqueue(new Callback<ConversationResponse>() {
-//                    @Override
-//                    public void onResponse(Call<ConversationResponse> call, Response<ConversationResponse> response) {
-//                        if (response.isSuccessful()) {
-//                            String conversationId = response.body().getId();
-//                            Intent intent = new Intent(PostDetailActivity.this, ChatActivity.class);
-//                            intent.putExtra("CONVERSATION_ID", conversationId);
-//                            startActivity(intent);
-//                        } else {
-//                            Toast.makeText(PostDetailActivity.this, "Không thể bắt đầu trò chuyện", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ConversationResponse> call, Throwable t) {
-//                        Toast.makeText(PostDetailActivity.this, "Lỗi kết nối", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//    }
+        Intent intent = new Intent(PostDetailActivity.this, ChatActivity.class);
+        intent.putExtra("participant_id", sellerId);
+        startActivity(intent);
+    }
 }

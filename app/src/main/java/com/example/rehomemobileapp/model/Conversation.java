@@ -2,10 +2,12 @@ package com.example.rehomemobileapp.model;
 
 import java.util.Date;
 import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
 public class Conversation {
+    @SerializedName("_id")
     private String id;
-    private List<String> participants;
+    private List<Participant> participants;
     private Date createdAt;
     private String displayName;
     private String avatar;
@@ -19,7 +21,7 @@ public class Conversation {
     public Conversation() {
     }
 
-    public Conversation(String id, List<String> participants, Date createdAt) {
+    public Conversation(String id, List<Participant> participants, Date createdAt) {
         this.id = id;
         this.participants = participants;
         this.createdAt = createdAt;
@@ -52,11 +54,11 @@ public class Conversation {
         this.id = id;
     }
 
-    public List<String> getParticipants() {
+    public List<Participant> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(List<String> participants) {
+    public void setParticipants(List<Participant> participants) {
         this.participants = participants;
     }
 
@@ -110,10 +112,16 @@ public class Conversation {
      * @param currentUserId The current user's ID
      */
     public void computeOtherParticipant(String currentUserId) {
+        if (currentUserId == null || currentUserId.isEmpty()) {
+            // Xử lý lỗi: currentUserId không hợp lệ
+            // Có thể log lỗi hoặc ném ngoại lệ
+            return;
+        }
         if (participants != null && participants.size() == 2) {
-            for (String participantId : participants) {
-                if (!participantId.equals(currentUserId)) {
-                    this.otherParticipantId = participantId;
+            for (Participant participant : participants) {
+                if (!participant.get_id().equals(currentUserId)) {
+                    this.otherParticipantId = participant.get_id();
+                    this.otherParticipantName = participant.getName();
                     break;
                 }
             }

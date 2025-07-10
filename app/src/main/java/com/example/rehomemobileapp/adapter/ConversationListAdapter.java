@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.rehomemobileapp.R;
 import com.example.rehomemobileapp.model.Conversation;
 
 import java.text.SimpleDateFormat;

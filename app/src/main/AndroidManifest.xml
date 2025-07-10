@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -38,7 +39,8 @@
             android:theme="@style/Theme.ReHomeMobileApp.NoActionBar"/>
 
         <activity android:name=".activities.PostDetailActivity" />
-
+        <activity android:name=".activities.ChatActivity" />
+        <activity android:name=".activities.ChatListActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

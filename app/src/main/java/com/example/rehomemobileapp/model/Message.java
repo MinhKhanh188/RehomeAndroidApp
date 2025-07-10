@@ -109,5 +109,35 @@ public class Message {
     public void setSenderId(String senderId) {
         this.senderId = senderId;
     }
+
+    public boolean isSent() {
+        return isSent;
+    }
+
+    public void setSent(boolean sent) {
+        isSent = sent;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getSenderAvatar() {
+        return senderAvatar;
+    }
+
+    public void setSenderAvatar(String senderAvatar) {
+        this.senderAvatar = senderAvatar;
+    }
+    public String getContent() {
+        return text;
+    }
+    public long getTimestamp() {
+        return sentAt != null ? sentAt.getTime() : 0;
+    }
 }
 

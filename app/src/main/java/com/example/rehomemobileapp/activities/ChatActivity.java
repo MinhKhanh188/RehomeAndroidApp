@@ -1,4 +1,6 @@
 package com.example.rehomemobileapp.activities;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -7,23 +9,30 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.rehomemobileapp.adapter.ConversationListAdapter;
+import com.example.rehomemobileapp.R;
+import com.example.rehomemobileapp.adapter.MessageAdapter;
+import com.example.rehomemobileapp.data.SessionManager;
+import com.example.rehomemobileapp.helpers.ChatHelper;
+import com.example.rehomemobileapp.model.Conversation;
+import com.example.rehomemobileapp.model.Message;
 import com.example.rehomemobileapp.socket.SocketManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
 public class ChatActivity extends AppCompatActivity implements SocketManager.SocketListener {
     private static final String TAG = "ChatActivity";
 
-    private RecyclerView recyclerViewConversationList;
     private RecyclerView recyclerViewMessages;
     private EditText editTextMessage;
     private ImageButton buttonSend;
@@ -32,12 +41,11 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
     private TextView textViewUserAvatar;
     private TextView textViewUserName;
 
-    private ConversationListAdapter conversationListAdapter;
     private MessageAdapter messageAdapter;
-    private List<Conversation> conversationList;
     private List<Message> messageList;
     private Conversation currentConversation;
-    private String currentUserId = "65d4a1b0c7e2b3f4a5b6c7d1"; // Placeholder - REPLACE WITH ACTUAL USER ID
+    private String currentUserId;
+    private ChatHelper chatHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +53,8 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
         setContentView(R.layout.activity_chat);
 
         initViews();
-        setupRecyclerViews();
-        loadSampleData();
+        initData();
+        setupRecyclerView();
         setupClickListeners();
 
         SocketManager.getInstance().setListener(this);
@@ -60,7 +68,6 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
     }
 
     private void initViews() {
-        recyclerViewConversationList = findViewById(R.id.recyclerViewChatList);
         recyclerViewMessages = findViewById(R.id.recyclerViewMessages);
         editTextMessage = findViewById(R.id.editTextMessage);
         buttonSend = findViewById(R.id.buttonSend);
@@ -68,22 +75,63 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
         layoutMessageInput = findViewById(R.id.layoutMessageInput);
         textViewUserAvatar = findViewById(R.id.textViewUserAvatar);
         textViewUserName = findViewById(R.id.textViewUserName);
+
+        // Handle back button
+        findViewById(R.id.buttonBack).setOnClickListener(v -> finish());
     }
 
-    private void setupRecyclerViews() {
-        // Setup conversation list
-        conversationList = new ArrayList<>();
-        conversationListAdapter = new ConversationListAdapter(conversationList, new ConversationListAdapter.OnConversationClickListener() {
-            @Override
-            public void onConversationClick(Conversation conversation) {
-                openConversation(conversation);
-            }
-        });
+    private void initData() {
+        currentUserId = SessionManager.getUserId(getApplicationContext());
 
-        recyclerViewConversationList.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewConversationList.setAdapter(conversationListAdapter);
+        String debugAuthToken = SessionManager.getAuthToken(this);
+        Log.d(TAG, "Debug: Auth Token from SessionManager: " + (debugAuthToken != null ? debugAuthToken : "NULL"));
+        Log.d(TAG, "Debug: User ID from SessionManager: " + (currentUserId != null ? currentUserId : "NULL"));
 
-        // Setup messages
+        if (debugAuthToken == null || TextUtils.isEmpty(currentUserId)) {
+            Toast.makeText(this, "Lỗi: Token hoặc User ID không có. Vui lòng đăng nhập lại.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        chatHelper = new ChatHelper(this);
+
+        // Get conversation details from intent
+        Intent intent = getIntent();
+        String conversationId = intent.getStringExtra("conversationId");
+        String otherParticipantId = intent.getStringExtra("otherParticipantId");
+        String otherParticipantName = intent.getStringExtra("otherParticipantName");
+        String otherParticipantAvatar = intent.getStringExtra("otherParticipantAvatar");
+
+        if (conversationId == null || otherParticipantId == null) {
+            Toast.makeText(this, "Lỗi: Không có thông tin cuộc hội thoại.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        currentConversation = new Conversation();
+        currentConversation.setId(conversationId);
+        currentConversation.setOtherParticipantId(otherParticipantId);
+        currentConversation.setOtherParticipantName(otherParticipantName);
+        currentConversation.setOtherParticipantAvatar(otherParticipantAvatar);
+        currentConversation.setDisplayName(otherParticipantName);
+        currentConversation.setAvatar(otherParticipantAvatar);
+
+        // Update header with other participant's info
+        textViewUserAvatar.setText(currentConversation.getAvatar());
+        textViewUserName.setText(currentConversation.getUserName());
+
+        // Show chat interface
+        layoutChatHeader.setVisibility(View.VISIBLE);
+        layoutMessageInput.setVisibility(View.VISIBLE);
+
+        // Join conversation on Socket.IO
+        SocketManager.getInstance().emit("join_conversation", currentConversation.getId());
+
+        // Load messages for this conversation
+        loadMessagesForConversation(currentConversation.getId());
+    }
+
+    private void setupRecyclerView() {
         messageList = new ArrayList<>();
         messageAdapter = new MessageAdapter(messageList);
 
@@ -93,45 +141,8 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
         recyclerViewMessages.setAdapter(messageAdapter);
     }
 
-    private void loadSampleData() {
-        // Sample conversation data - simulating backend response
-        // In real app, this would come from API call to getUserConversations()
-
-        Conversation conversation1 = new Conversation();
-        conversation1.setId("65d4a1b0c7e2b3f4a5b6c7d8");
-        conversation1.setParticipants(Arrays.asList(currentUserId, "65d4a1b0c7e2b3f4a5b6c7d2"));
-        conversation1.setCreatedAt(new Date());
-        conversation1.setLastMessage("No message yet");
-
-        Conversation conversation2 = new Conversation();
-        conversation2.setId("65d4a1b0c7e2b3f4a5b6c7d9");
-        conversation2.setParticipants(Arrays.asList(currentUserId, "65d4a1b0c7e2b3f4a5b6c7d3"));
-        conversation2.setCreatedAt(new Date());
-        conversation2.setLastMessage("No message yet");
-
-        Conversation conversation3 = new Conversation();
-        conversation3.setId("65d4a1b0c7e2b3f4a5b6c7e0");
-        conversation3.setParticipants(Arrays.asList(currentUserId, "65d4a1b0c7e2b3f4a5b6c7d4"));
-        conversation3.setCreatedAt(new Date());
-        conversation3.setLastMessage("No message yet");
-
-        conversationList.add(conversation1);
-        conversationList.add(conversation2);
-        conversationList.add(conversation3);
-
-        // Process conversations for UI display (compute other participants)
-        ConversationHelper.processConversationsForUI(conversationList, currentUserId);
-
-        conversationListAdapter.notifyDataSetChanged();
-    }
-
     private void setupClickListeners() {
-        buttonSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMessage();
-            }
-        });
+        buttonSend.setOnClickListener(v -> sendMessage());
 
         editTextMessage.setOnEditorActionListener((v, actionId, event) -> {
             sendMessage();
@@ -139,75 +150,44 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
         });
     }
 
-    private void openConversation(Conversation conversation) {
-        // Validate that this is a proper 1-1 chat
-        if (!ConversationHelper.isValidOneOnOneChat(conversation, currentUserId)) {
-            Log.e(TAG, "Invalid 1-1 conversation: " + conversation.toString());
-            return;
-        }
-
-        currentConversation = conversation;
-
-        // Update header with other participant's info
-        textViewUserAvatar.setText(conversation.getAvatar());
-        textViewUserName.setText(conversation.getUserName());
-
-        // Show chat interface
-        layoutChatHeader.setVisibility(View.VISIBLE);
-        layoutMessageInput.setVisibility(View.VISIBLE);
-
-        // Join conversation on Socket.IO
-        SocketManager.getInstance().emit("join_conversation", conversation.getId());
-
-        // Load messages for this conversation
-        loadMessagesForConversation(conversation.getId());
-    }
-
     private void loadMessagesForConversation(String conversationId) {
-        messageList.clear();
+        chatHelper.getMessages(conversationId, new ChatHelper.ChatCallback<List<Message>>() {
+            @Override
+            public void onSuccess(List<Message> messages) {
+                runOnUiThread(() -> {
+                    messageList.clear();
+                    for (Message message : messages) {
+                        message.setSent(message.getSenderId().equals(currentUserId));
+                    }
+                    messageList.addAll(messages);
+                    messageAdapter.notifyDataSetChanged();
+                    if (messageList.size() > 0) {
+                        recyclerViewMessages.scrollToPosition(messageList.size() - 1);
+                    }
+                });
+            }
 
-        // TODO: In real app, make API call to get messages
-        // GET /api/conversations/{conversationId}/messages
-
-        // Sample messages for demonstration
-        if (conversationId.equals("65d4a1b0c7e2b3f4a5b6c7d8")) {
-            Date now = new Date();
-            messageList.add(new Message("msg1", conversationId, currentUserId, "Xin chào!", new Date(now.getTime() - 3600000), true, "", ""));
-            messageList.add(new Message("msg2", conversationId, currentConversation.getOtherParticipantId(), "Chào bạn! Bạn khỏe không?", new Date(now.getTime() - 3000000), false, "", ""));
-            messageList.add(new Message("msg3", conversationId, currentUserId, "Tôi khỏe, cảm ơn bạn!", new Date(now.getTime() - 1800000), true, "", ""));
-        }
-
-        messageAdapter.notifyDataSetChanged();
-        if (messageList.size() > 0) {
-            recyclerViewMessages.scrollToPosition(messageList.size() - 1);
-        }
+            @Override
+            public void onError(String error) {
+                runOnUiThread(() -> {
+                    Log.e(TAG, "Error loading messages: " + error);
+                    Toast.makeText(ChatActivity.this, "Không thể tải tin nhắn", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
     }
 
     private void sendMessage() {
         String messageText = editTextMessage.getText().toString().trim();
 
         if (!TextUtils.isEmpty(messageText) && currentConversation != null) {
-            JSONObject messageData = new JSONObject();
-            try {
-                messageData.put("conversationId", currentConversation.getId());
-                messageData.put("senderId", currentUserId);
-                messageData.put("text", messageText);
-            } catch (JSONException e) {
-                Log.e(TAG, "Error creating message JSON: " + e.getMessage());
-                return;
-            }
-
-            // Send via Socket.IO
-            SocketManager.getInstance().emit("send_message", messageData);
-
-            // Add message to local list immediately for better UX
             Message newMessage = new Message(
-                    String.valueOf(System.currentTimeMillis()), // Temp ID
+                    String.valueOf(System.currentTimeMillis()),
                     currentConversation.getId(),
                     currentUserId,
                     messageText,
-                    new Date(), // Current time
-                    true, // Sent by current user
+                    new Date(),
+                    true,
                     "",
                     ""
             );
@@ -215,30 +195,51 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
             messageList.add(newMessage);
             messageAdapter.notifyItemInserted(messageList.size() - 1);
             recyclerViewMessages.scrollToPosition(messageList.size() - 1);
-
-            // Update last message in conversation list
-            currentConversation.setLastMessage(messageText);
-            currentConversation.setLastMessageTime(new Date());
-            conversationListAdapter.notifyDataSetChanged();
-
             editTextMessage.setText("");
+
+            chatHelper.sendMessage(currentConversation.getId(), messageText, new ChatHelper.ChatCallback<Message>() {
+                @Override
+                public void onSuccess(Message message) {
+                    Log.d(TAG, "Message sent successfully via API");
+                    runOnUiThread(() -> {
+                        currentConversation.setLastMessage(messageText);
+                        currentConversation.setLastMessageTime(new Date());
+                    });
+                }
+
+                @Override
+                public void onError(String error) {
+                    runOnUiThread(() -> {
+                        Log.e(TAG, "Error sending message via API: " + error);
+                        Toast.makeText(ChatActivity.this, "Không thể gửi tin nhắn", Toast.LENGTH_SHORT).show();
+                        if (messageList.size() > 0 && messageList.get(messageList.size() - 1).getId().equals(newMessage.getId())) {
+                            messageList.remove(messageList.size() - 1);
+                            messageAdapter.notifyItemRemoved(messageList.size());
+                        }
+                    });
+                }
+            });
+
+            JSONObject messageData = new JSONObject();
+            try {
+                messageData.put("conversationId", currentConversation.getId());
+                messageData.put("senderId", currentUserId);
+                messageData.put("text", messageText);
+                SocketManager.getInstance().emit("send_message", messageData);
+            } catch (JSONException e) {
+                Log.e(TAG, "Error creating message JSON: " + e.getMessage());
+            }
         }
     }
 
     @Override
     public void onConnect() {
         Log.d(TAG, "Socket Connected");
-        runOnUiThread(() -> {
-            // Optional: Show connection status
-        });
     }
 
     @Override
     public void onDisconnect() {
         Log.d(TAG, "Socket Disconnected");
-        runOnUiThread(() -> {
-            // Optional: Show disconnection status
-        });
     }
 
     @Override
@@ -246,7 +247,6 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
         Log.d(TAG, "Received message: " + message.getText());
         runOnUiThread(() -> {
             if (currentConversation != null && message.getConversationId().equals(currentConversation.getId())) {
-                // Check if message is already in list to avoid duplicates
                 boolean messageExists = false;
                 for (Message m : messageList) {
                     if (m.getId() != null && m.getId().equals(message.getId())) {
@@ -256,16 +256,13 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
                 }
 
                 if (!messageExists) {
-                    // Determine if the received message is from the current user or other participant
                     message.setSent(message.getSenderId().equals(currentUserId));
                     messageList.add(message);
                     messageAdapter.notifyItemInserted(messageList.size() - 1);
                     recyclerViewMessages.scrollToPosition(messageList.size() - 1);
 
-                    // Update last message in conversation list
                     currentConversation.setLastMessage(message.getText());
                     currentConversation.setLastMessageTime(message.getSentAt());
-                    conversationListAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -275,7 +272,37 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
     public void onConnectError(String error) {
         Log.e(TAG, "Socket Connection Error: " + error);
         runOnUiThread(() -> {
-            // Optional: Show error message to user
+            Toast.makeText(this, "Lỗi kết nối real-time", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    public void startConversationWithUser(String participantId) {
+        chatHelper.createOrGetConversation(participantId, new ChatHelper.ChatCallback<Conversation>() {
+            @Override
+            public void onSuccess(Conversation conversation) {
+                runOnUiThread(() -> {
+                    // This method is now handled by ChatListActivity, so this part is simplified
+                    // to just open the conversation if it's called directly.
+                    // In a real scenario, this might be triggered from a user profile, etc.
+                    currentConversation = conversation;
+                    textViewUserAvatar.setText(currentConversation.getAvatar());
+                    textViewUserName.setText(currentConversation.getUserName());
+                    layoutChatHeader.setVisibility(View.VISIBLE);
+                    layoutMessageInput.setVisibility(View.VISIBLE);
+                    SocketManager.getInstance().emit("join_conversation", currentConversation.getId());
+                    loadMessagesForConversation(currentConversation.getId());
+                });
+            }
+
+            @Override
+            public void onError(String error) {
+                runOnUiThread(() -> {
+                    Log.e(TAG, "Error creating conversation: " + error);
+                    Toast.makeText(ChatActivity.this, "Không thể tạo cuộc hội thoại", Toast.LENGTH_SHORT).show();
+                });
+            }
         });
     }
 }
+
+
