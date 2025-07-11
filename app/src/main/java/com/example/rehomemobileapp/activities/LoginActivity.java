@@ -19,6 +19,7 @@ import com.example.rehomemobileapp.data.SessionManager;
 import com.example.rehomemobileapp.model.User;
 import com.example.rehomemobileapp.network.ApiClient;
 import com.example.rehomemobileapp.network.response.LoginResponse;
+import com.example.rehomemobileapp.utils.JwtUtils;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,7 +79,9 @@ public class LoginActivity extends AppCompatActivity {
                     // Save to SessionManager
                     SessionManager.saveAuthToken(LoginActivity.this, token);
                     SessionManager.saveUser(LoginActivity.this, user);
-                    SessionManager.saveUserId(LoginActivity.this, user.get_id());
+                    SessionManager.saveUserId(LoginActivity.this, JwtUtils.getUserIdFromToken(token));
+
+                    Log.d("DEBUG", "User id = " + JwtUtils.getUserIdFromToken(token));
 
                     // Navigate to home
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
