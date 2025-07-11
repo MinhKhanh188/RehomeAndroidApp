@@ -39,6 +39,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
     private String sellerId;
+    private String sellerName;
 
     private ImageView mainProductImage;
     private ViewPager2 mainImagePager;
@@ -129,6 +130,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
         Intent intent = new Intent(PostDetailActivity.this, ChatActivity.class);
         intent.putExtra("participant_id", sellerId);
+        intent.putExtra("participant_name", sellerName);
         startActivity(intent);
     }
 }

@@ -2,6 +2,8 @@ package com.example.rehomemobileapp.model;
 
 import java.util.Date;
 import java.util.List;
+
+import com.example.rehomemobileapp.data.SessionManager;
 import com.google.gson.annotations.SerializedName;
 
 public class Conversation {
@@ -11,7 +13,7 @@ public class Conversation {
     private Date createdAt;
     private String displayName;
     private String avatar;
-    private String lastMessage;
+    private Message lastMessage;
     private Date lastMessageTime;
 
     private String otherParticipantId;
@@ -26,14 +28,14 @@ public class Conversation {
         this.participants = participants;
         this.createdAt = createdAt;
     }
-    public Conversation(String id, String displayName, String avatar, String lastMessage, long lastMessageTime) {
+    public Conversation(String id, String displayName, String avatar, Message lastMessage, long lastMessageTime) {
         this.id = id;
         this.displayName = displayName;
         this.avatar = avatar;
         this.lastMessage = lastMessage;
         this.lastMessageTime = new Date(lastMessageTime);
     }
-    public Conversation(String id, String displayName, String avatar, String lastMessage, Date lastMessageTime) {
+    public Conversation(String id, String displayName, String avatar, Message lastMessage, Date lastMessageTime) {
         this.id = id;
         this.displayName = displayName;
         this.avatar = avatar;
@@ -86,11 +88,11 @@ public class Conversation {
         this.avatar = avatar;
     }
 
-    public String getLastMessage() {
+    public Message getLastMessage() {
         return lastMessage;
     }
 
-    public void setLastMessage(String lastMessage) {
+    public void setLastMessage(Message lastMessage) {
         this.lastMessage = lastMessage;
     }
 
@@ -136,8 +138,15 @@ public class Conversation {
         return participants != null && participants.size() == 2;
     }
 
-    public String getOtherParticipantId() {
-        return otherParticipantId;
+    public String getOtherParticipantId(String currentUserId) {
+        if (participants != null && participants.size() == 2) {
+            for (Participant participant : participants) {
+                if (!participant.get_id().equals(currentUserId)) {
+                    return participant.get_id();
+                }
+            }
+        }
+        return null;
     }
 
     public void setOtherParticipantId(String otherParticipantId) {

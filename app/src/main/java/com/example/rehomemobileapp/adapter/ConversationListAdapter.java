@@ -45,7 +45,7 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationLi
 
         holder.textViewAvatar.setText(conversation.getAvatar());
         holder.textViewUserName.setText(conversation.getUserName());
-        holder.textViewLastMessage.setText(conversation.getLastMessage());
+        holder.textViewLastMessage.setText(conversation.getLastMessage() != null ? conversation.getLastMessage().getText() : "");
 
         if (conversation.getLastMessageTime() > 0) {
             holder.textViewTime.setText(timeFormat.format(new Date(conversation.getLastMessageTime())));

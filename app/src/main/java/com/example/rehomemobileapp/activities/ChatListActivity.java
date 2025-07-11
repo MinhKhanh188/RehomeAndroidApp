@@ -103,10 +103,11 @@ public class ChatListActivity extends AppCompatActivity {
     }
 
     private void openChatActivity(Conversation conversation) {
+        String currentUserId = SessionManager.getUserId(getApplicationContext());
         // Pass conversation details to ChatActivity
         Intent intent = new Intent(ChatListActivity.this, ChatActivity.class);
         intent.putExtra("conversationId", conversation.getId());
-        intent.putExtra("otherParticipantId", conversation.getOtherParticipantId());
+        intent.putExtra("participant_id", conversation.getOtherParticipantId(currentUserId));
         intent.putExtra("otherParticipantName", conversation.getOtherParticipantName());
         intent.putExtra("otherParticipantAvatar", conversation.getOtherParticipantAvatar());
         startActivity(intent);
