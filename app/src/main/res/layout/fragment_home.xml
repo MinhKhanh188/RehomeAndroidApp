@@ -8,40 +8,55 @@
     android:background="@drawable/main_white_background"
     tools:context=".ui.fragment.home.HomeFragment">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-
-        <!-- Section title -->
-        <TextView
-            android:id="@+id/recentProductsTitle"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mới thêm gần đây"
-            android:textSize="20sp"
-            android:padding="16dp"
-            android:textStyle="bold" />
+            android:paddingBottom="16dp">
 
-        <!-- RecyclerView for products -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerRecentProducts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/banner1" />
 
-        <!-- Benefits section -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tại sao nên chọn đồ cũ?"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:padding="16dp" />
+            <TextView
+                android:id="@+id/recentProductsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mới thêm gần đây"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="8dp" />
 
-        <!-- Add more sections here as needed -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerRecentProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="1dp"
+                android:clipToPadding="false" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tại sao nên chọn đồ cũ?"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="8dp" />
 
+            <!-- Add more views below -->
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

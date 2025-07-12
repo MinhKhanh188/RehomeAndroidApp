@@ -96,7 +96,7 @@ public class UploadPostActivity extends AppCompatActivity {
     }
 
     private void populateStatusSpinner() {
-        List<String> statuses = Arrays.asList("Mới", "Đã sử dụng", "Như mới");
+        List<String> statuses = Arrays.asList("Mới", "Like-new", "Cũ");
         ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, statuses);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
