@@ -71,13 +71,15 @@ public class ConversationHelper {
         }
 
         List<Participant> participants = conversation.getParticipants();
-        for (Participant participant : participants) {
-            if (participant.get_id().equals(currentUserId)) {
+        for (Participant p : participants) {
+            if (p.get_id().equals(currentUserId)) {
                 return true;
             }
         }
         return false;
     }
+
+
 
     /**
      * Generate placeholder name for demo purposes

@@ -20,7 +20,7 @@ public interface ChatApiService {
     // Tạo hoặc lấy cuộc hội thoại
     @POST(ApiConstants.JOIN_CONVERSATION)
     @FormUrlEncoded
-    Call<ConversationResponse> createOrGetConversation(
+    Call<Conversation> createOrGetConversation(
             @Header("Authorization") String token,
             @Field("participantId") String participantId
     );

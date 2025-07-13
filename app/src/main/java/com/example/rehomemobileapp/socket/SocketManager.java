@@ -1,34 +1,29 @@
 package com.example.rehomemobileapp.socket;
-import com.example.rehomemobileapp.model.Message;
-import com.example.rehomemobileapp.network.ApiConstants;
+
+import android.util.Log;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
 public class SocketManager {
 
-    private Socket mSocket;
-    private static SocketManager instance;
-    private SocketListener listener;
+    private static final String TAG = "SocketManager";
+    private static final String SOCKET_URL = "https://rehome.id.vn";
 
-    public interface SocketListener {
-        void onConnect();
-        void onDisconnect();
-        void onReceiveMessage(Message message);
-        void onConnectError(String error);
-    }
+    private static SocketManager instance;
+    private Socket socket;
+    private SocketListener listener;
 
     private SocketManager() {
         try {
-            // Sử dụng URL backend thực tế từ ApiConstants
-            mSocket = IO.socket(ApiConstants.BASE_URL);
+            IO.Options options = new IO.Options();
+            options.reconnection = true;
+            socket = IO.socket(SOCKET_URL, options);
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            Log.e(TAG, "Socket URI error: " + e.getMessage());
         }
     }
 
@@ -39,82 +34,52 @@ public class SocketManager {
         return instance;
     }
 
+    public void connect() {
+        if (socket != null && !socket.connected()) {
+            socket.connect();
+            socket.on(Socket.EVENT_CONNECT, args -> {
+                Log.d(TAG, "Socket connected");
+                if (listener != null) listener.onConnect();
+            });
+            socket.on(Socket.EVENT_DISCONNECT, args -> {
+                Log.d(TAG, "Socket disconnected");
+                if (listener != null) listener.onDisconnect();
+            });
+            socket.on("receive_message", args -> {
+                if (listener != null && args.length > 0) {
+                    // You may need to parse args[0] into a Message object here
+                    Log.d(TAG, "Received raw message: " + args[0]);
+                    // TODO: Convert args[0] to Message model and call listener.onReceiveMessage(...)
+                }
+            });
+            socket.on(Socket.EVENT_CONNECT_ERROR, args -> {
+                if (listener != null) {
+                    listener.onConnectError(args.length > 0 ? args[0].toString() : "Unknown");
+                }
+            });
+        }
+    }
+
+    public void disconnect() {
+        if (socket != null) {
+            socket.disconnect();
+        }
+    }
+
+    public void emit(String event, Object data) {
+        if (socket != null && socket.connected()) {
+            socket.emit(event, data);
+        }
+    }
+
     public void setListener(SocketListener listener) {
         this.listener = listener;
     }
 
-    public void connect() {
-        mSocket.connect();
-        mSocket.on(Socket.EVENT_CONNECT, onConnect);
-        mSocket.on(Socket.EVENT_DISCONNECT, onDisconnect);
-        mSocket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
-        mSocket.on("receive_message", onReceiveMessage);
-    }
-
-    public void disconnect() {
-        mSocket.disconnect();
-        mSocket.off(Socket.EVENT_CONNECT, onConnect);
-        mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
-        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
-        mSocket.off("receive_message", onReceiveMessage);
-    }
-
-    public void emit(String event, Object... args) {
-        mSocket.emit(event, args);
-    }
-
-    private Emitter.Listener onConnect = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            if (listener != null) {
-                listener.onConnect();
-            }
-        }
-    };
-
-    private Emitter.Listener onDisconnect = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            if (listener != null) {
-                listener.onDisconnect();
-            }
-        }
-    };
-
-    private Emitter.Listener onConnectError = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            if (listener != null) {
-                listener.onConnectError(args[0].toString());
-            }
-        }
-    };
-
-    private Emitter.Listener onReceiveMessage = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            JSONObject data = (JSONObject) args[0];
-            try {
-                String id = data.getString("_id");
-                String conversationId = data.getString("conversationId");
-                String senderId = data.getString("senderId");
-                String text = data.getString("text");
-                long timestamp = data.getLong("createdAt"); // Assuming createdAt is timestamp
-
-                // Determine if the message is sent by current user (this logic needs to be refined based on actual user ID)
-                boolean isSent = false; // Placeholder, needs actual user ID comparison
-
-                Message message = new Message(id, text, timestamp, isSent, senderId, "", "");
-                if (listener != null) {
-                    listener.onReceiveMessage(message);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    };
-
-    public Socket getSocket() {
-        return mSocket;
+    public interface SocketListener {
+        void onConnect();
+        void onDisconnect();
+        void onReceiveMessage(com.example.rehomemobileapp.model.Message message);
+        void onConnectError(String error);
     }
 }

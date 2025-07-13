@@ -5,6 +5,10 @@ import android.content.Context;
 import com.example.rehomemobileapp.MyApp;
 
 import com.example.rehomemobileapp.data.SessionManager;
+import com.example.rehomemobileapp.helpers.ConversationDeserializer;
+import com.example.rehomemobileapp.model.Conversation;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
@@ -21,35 +25,33 @@ public class ChatApiClient {
 
     public static ChatApiService getChatApiService() {
         if (retrofit == null) {
-            // Create a logging interceptor
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY); // Đảm bảo là BODY
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-            // Create an OkHttpClient and add the interceptor
             OkHttpClient client = new OkHttpClient.Builder()
-                    .addInterceptor(new Interceptor() {
-                        @Override
-                        public Response intercept(Chain chain) throws IOException {
-                            Request original = chain.request();
-                            Request.Builder requestBuilder = original.newBuilder();
+                    .addInterceptor(chain -> {
+                        Request original = chain.request();
+                        Request.Builder requestBuilder = original.newBuilder();
 
-                            // Add Authorization header if token exists
-                            String authToken = SessionManager.getAuthToken(MyApp.getAppContext());
-                            if (authToken != null && !authToken.isEmpty()) {
-                                requestBuilder.header("Authorization", "Bearer " + authToken);
-                            }
-
-                            Request request = requestBuilder.build();
-                            return chain.proceed(request);
+                        String authToken = SessionManager.getAuthToken(MyApp.getAppContext());
+                        if (authToken != null && !authToken.isEmpty()) {
+                            requestBuilder.header("Authorization", "Bearer " + authToken);
                         }
+
+                        return chain.proceed(requestBuilder.build());
                     })
-                    .addInterceptor(logging) // Add logging interceptor
+                    .addInterceptor(logging)
                     .build();
+
+            // Register your custom deserializer here 🔥
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Conversation.class, new ConversationDeserializer())
+                    .create();
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(ApiConstants.BASE_URL)
                     .client(client)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }
         return retrofit.create(ChatApiService.class);

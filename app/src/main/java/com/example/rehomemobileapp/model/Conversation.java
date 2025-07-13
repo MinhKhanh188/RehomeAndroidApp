@@ -28,6 +28,7 @@ public class Conversation {
         this.participants = participants;
         this.createdAt = createdAt;
     }
+
     public Conversation(String id, String displayName, String avatar, Message lastMessage, long lastMessageTime) {
         this.id = id;
         this.displayName = displayName;
@@ -114,11 +115,7 @@ public class Conversation {
      * @param currentUserId The current user's ID
      */
     public void computeOtherParticipant(String currentUserId) {
-        if (currentUserId == null || currentUserId.isEmpty()) {
-            // Xử lý lỗi: currentUserId không hợp lệ
-            // Có thể log lỗi hoặc ném ngoại lệ
-            return;
-        }
+        if (currentUserId == null || currentUserId.isEmpty()) return;
         if (participants != null && participants.size() == 2) {
             for (Participant participant : participants) {
                 if (!participant.get_id().equals(currentUserId)) {
@@ -129,6 +126,7 @@ public class Conversation {
             }
         }
     }
+
 
     /**
      * Check if this is a valid 1-1 conversation
@@ -148,6 +146,7 @@ public class Conversation {
         }
         return null;
     }
+
 
     public void setOtherParticipantId(String otherParticipantId) {
         this.otherParticipantId = otherParticipantId;

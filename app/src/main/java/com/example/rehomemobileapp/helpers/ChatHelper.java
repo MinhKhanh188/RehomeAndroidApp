@@ -41,14 +41,12 @@ public class ChatHelper {
             return;
         }
 
-        chatApiService.createOrGetConversation(token, participantId).enqueue(new Callback<ConversationResponse>() {
+        chatApiService.createOrGetConversation(token, participantId).enqueue(new Callback<Conversation>() {
             @Override
-            public void onResponse(Call<ConversationResponse> call, Response<ConversationResponse> response) {
-                Log.d(TAG, "createOrGetConversation: URL = " + call.request().url());
-                Log.d(TAG, "createOrGetConversation: Response Code = " + response.code());
+            public void onResponse(Call<Conversation> call, Response<Conversation> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d(TAG, "createOrGetConversation: Response Body = " + response.body().toString());
-                    callback.onSuccess(response.body().getData());
+                    callback.onSuccess(response.body());
+
                 } else {
                     String error = "Không thể tạo cuộc hội thoại: " + response.code();
                     if (response.errorBody() != null) {
@@ -64,7 +62,7 @@ public class ChatHelper {
             }
 
             @Override
-            public void onFailure(Call<ConversationResponse> call, Throwable t) {
+            public void onFailure(Call<Conversation> call, Throwable t) {
                 Log.e(TAG, "createOrGetConversation: Network Error = " + t.getMessage());
                 callback.onError("Lỗi kết nối: " + t.getMessage());
             }
@@ -161,7 +159,6 @@ public class ChatHelper {
                 Log.d(TAG, "getUserConversations: URL = " + call.request().url());
                 Log.d(TAG, "getUserConversations: Response Code = " + response.code());
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d(TAG, "getUserConversations: Response Body = " + response.body().toString());
                     callback.onSuccess(response.body());
                 } else {
                     String error = "Không thể tải danh sách cuộc hội thoại: " + response.code();
@@ -184,4 +181,5 @@ public class ChatHelper {
             }
         });
     }
+
 }
