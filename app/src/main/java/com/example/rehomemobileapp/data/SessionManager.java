@@ -28,6 +28,7 @@ public class SessionManager {
         prefs.edit()
                 .putString("user_name", user.getName())
                 .putBoolean("user_verified", user.isVerified())
+
                 .apply();
     }
 
@@ -67,6 +68,21 @@ public class SessionManager {
         String json = prefs.getString("provinces_json", "[]");
         Type type = new TypeToken<List<Province>>() {}.getType();
         return new Gson().fromJson(json, type);
+    }
+
+    public static void saveUserId(Context context, String userId) {
+        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        prefs.edit().putString("user_id", userId).apply();
+    }
+
+    public static String getUserId(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        return prefs.getString("user_id", null);
+    }
+
+    public static void clearSession(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        prefs.edit().clear().apply();
     }
 
 

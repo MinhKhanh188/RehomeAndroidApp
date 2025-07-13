@@ -9,4 +9,17 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#FF888888</color>
     <color name="main_orange">#FF852F</color>
+
+    <!-- Chat App Colors -->
+    <color name="primary_orange">#FF6B35</color>
+    <color name="primary_orange_dark">#E55A2B</color>
+    <color name="background_gray">#F5F5F5</color>
+    <color name="chat_background">#F8F8F8</color>
+    <color name="message_sent">#FF6B35</color>
+    <color name="message_received">#FFFFFF</color>
+    <color name="text_primary">#333333</color>
+    <color name="text_secondary">#666666</color>
+    <color name="text_hint">#999999</color>
+    <color name="divider">#E0E0E0</color>
+    <color name="avatar_background">#FF6B35</color>
 </resources>

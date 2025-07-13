@@ -15,6 +15,30 @@ public class User {
     private boolean isAdmin;
     private String createdAt;
     private String updatedAt;
+    private boolean isOnline;
+    private long lastSeen;
+    private String avatar;
+
+    public User() {
+        // Default constructor
+    }
+    public User(String _id, String name, String avatar) {
+        this._id = _id;
+        this.name = name;
+        this.avatar = avatar;
+        this.isOnline = false;
+        this.lastSeen = System.currentTimeMillis();
+    }
+
+    public User(String _id, String name, String avatar, String email, String phoneNumber) {
+        this._id = _id;
+        this.name = name;
+        this.avatar = avatar;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.isOnline = false;
+        this.lastSeen = System.currentTimeMillis();
+    }
 
     public String get_id() {
         return _id;
@@ -126,5 +150,29 @@ public class User {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
+    }
+
+    public long getLastSeen() {
+        return lastSeen;
+    }
+
+    public void setLastSeen(long lastSeen) {
+        this.lastSeen = lastSeen;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
