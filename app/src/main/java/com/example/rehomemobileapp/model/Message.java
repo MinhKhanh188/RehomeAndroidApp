@@ -1,19 +1,81 @@
 package com.example.rehomemobileapp.model;
 
+import java.util.Date;
+
 public class Message {
-    private String _id;
-    private String text;
-    private String sentAt;
-
+    private String id;
     private String conversationId;
-    private User senderId;
+    private String senderId;
+    private String text;
+    private Date sentAt;
+    private boolean isSent;
+    private String senderName;
+    private String senderAvatar;
 
-    public String get_id() {
-        return _id;
+    public Message() {
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public Message(String id, String text, Date sentAt, boolean isSent) {
+        this.id = id;
+        this.text = text;
+        this.sentAt = sentAt;
+        this.isSent = isSent;
+    }
+
+    // Constructor for backward compatibility with timestamp as long
+    public Message(String id, String text, long timestamp, boolean isSent) {
+        this.id = id;
+        this.text = text;
+        this.sentAt = new Date(timestamp);
+        this.isSent = isSent;
+    }
+
+    // Constructor with senderId for backward compatibility
+    public Message(String id, String text, long timestamp, boolean isSent, String senderId) {
+        this.id = id;
+        this.text = text;
+        this.sentAt = new Date(timestamp);
+        this.isSent = isSent;
+        this.senderId = senderId;
+    }
+
+    // Constructor with senderId and empty senderName/senderAvatar
+    public Message(String id, String text, long timestamp, boolean isSent, String senderId, String senderName, String senderAvatar) {
+        this.id = id;
+        this.text = text;
+        this.sentAt = new Date(timestamp);
+        this.isSent = isSent;
+        this.senderId = senderId;
+        this.senderName = senderName;
+        this.senderAvatar = senderAvatar;
+    }
+
+    public Message(String id, String conversationId, String senderId, String text, Date sentAt, boolean isSent) {
+        this.id = id;
+        this.conversationId = conversationId;
+        this.senderId = senderId;
+        this.text = text;
+        this.sentAt = sentAt;
+        this.isSent = isSent;
+    }
+
+    public Message(String id, String conversationId, String senderId, String text, Date sentAt, boolean isSent, String senderName, String senderAvatar) {
+        this.id = id;
+        this.conversationId = conversationId;
+        this.senderId = senderId;
+        this.text = text;
+        this.sentAt = sentAt;
+        this.isSent = isSent;
+        this.senderName = senderName;
+        this.senderAvatar = senderAvatar;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getText() {
@@ -24,11 +86,11 @@ public class Message {
         this.text = text;
     }
 
-    public String getSentAt() {
+    public Date getSentAt() {
         return sentAt;
     }
 
-    public void setSentAt(String sentAt) {
+    public void setSentAt(Date sentAt) {
         this.sentAt = sentAt;
     }
 
@@ -40,12 +102,42 @@ public class Message {
         this.conversationId = conversationId;
     }
 
-    public User getSenderId() {
+    public String getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(User senderId) {
+    public void setSenderId(String senderId) {
         this.senderId = senderId;
+    }
+
+    public boolean isSent() {
+        return isSent;
+    }
+
+    public void setSent(boolean sent) {
+        isSent = sent;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getSenderAvatar() {
+        return senderAvatar;
+    }
+
+    public void setSenderAvatar(String senderAvatar) {
+        this.senderAvatar = senderAvatar;
+    }
+    public String getContent() {
+        return text;
+    }
+    public long getTimestamp() {
+        return sentAt != null ? sentAt.getTime() : 0;
     }
 }
 
