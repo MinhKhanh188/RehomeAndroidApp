@@ -113,6 +113,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
 
                             sellerId = post.getSellerId();
+                            sellerName = post.getSellerName();
                         }
                     }
 

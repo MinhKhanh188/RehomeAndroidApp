@@ -97,23 +97,22 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
         Intent intent = getIntent();
         String conversationId = intent.getStringExtra("conversationId");
         String otherParticipantId = intent.getStringExtra("participant_id");
-        String otherParticipantName = intent.getStringExtra("otherParticipantName");
-        String otherParticipantAvatar = intent.getStringExtra("otherParticipantAvatar");
+        String otherParticipantName = intent.getStringExtra("participant_name"); // 💡 fixed key
+        String otherParticipantAvatar = intent.getStringExtra("participant_avatar"); // optional for future
 
-        if ( otherParticipantId == null) {
+        if (otherParticipantId == null) {
             Toast.makeText(this, "Lỗi: Không có thông tin người tham gia chat", Toast.LENGTH_LONG).show();
             finish();
             return;
         }
 
         if (conversationId == null) {
-            // If no conversationId, try to create or get one
             chatHelper.createOrGetConversation(otherParticipantId, new ChatHelper.ChatCallback<Conversation>() {
                 @Override
                 public void onSuccess(Conversation conversation) {
                     runOnUiThread(() -> {
                         currentConversation = conversation;
-                        setupChatUIAndLoadMessages(otherParticipantName, otherParticipantAvatar);
+                        setupChatUIAndLoadMessages(otherParticipantName, otherParticipantAvatar); // ✅ show name
                     });
                 }
 
@@ -127,7 +126,6 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
                 }
             });
         } else {
-            // If conversationId exists, proceed directly
             currentConversation = new Conversation();
             currentConversation.setId(conversationId);
             currentConversation.setOtherParticipantId(otherParticipantId);
@@ -135,8 +133,9 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
             currentConversation.setOtherParticipantAvatar(otherParticipantAvatar);
             currentConversation.setDisplayName(otherParticipantName);
             currentConversation.setAvatar(otherParticipantAvatar);
-            setupChatUIAndLoadMessages(otherParticipantName, otherParticipantAvatar);
+            setupChatUIAndLoadMessages(otherParticipantName, otherParticipantAvatar); // ✅ show name
         }
+
     }
 
     private void setupRecyclerView() {
@@ -312,20 +311,27 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
         });
     }
     private void setupChatUIAndLoadMessages(String otherParticipantName, String otherParticipantAvatar) {
-        // Update header with other participant's info
-        textViewUserAvatar.setText(otherParticipantAvatar != null && !otherParticipantAvatar.isEmpty() ? String.valueOf(otherParticipantName.charAt(0)).toUpperCase() : "?");
-        textViewUserName.setText(otherParticipantName);
+        // Use initials if name is provided
+        if (otherParticipantName != null && !otherParticipantName.isEmpty()) {
+            String[] nameParts = otherParticipantName.trim().split(" ");
+            String initials = nameParts.length >= 2
+                    ? ("" + nameParts[0].charAt(0) + nameParts[1].charAt(0)).toUpperCase()
+                    : ("" + nameParts[0].charAt(0)).toUpperCase();
 
-        // Show chat interface
+            textViewUserAvatar.setText(initials);
+            textViewUserName.setText(otherParticipantName);
+        } else {
+            textViewUserAvatar.setText("?");
+            textViewUserName.setText("Người dùng");
+        }
+
         layoutChatHeader.setVisibility(View.VISIBLE);
         layoutMessageInput.setVisibility(View.VISIBLE);
 
-        // Join conversation on Socket.IO
         SocketManager.getInstance().emit("join_conversation", currentConversation.getId());
-
-        // Load messages for this conversation
         loadMessagesForConversation(currentConversation.getId());
     }
+
 }
 
 
