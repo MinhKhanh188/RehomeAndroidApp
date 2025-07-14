@@ -71,13 +71,16 @@ public class HomeFragment extends Fragment {
                         loadingIndicator.setVisibility(View.GONE);
                         if (response.isSuccessful() && response.body() != null) {
                             postList.clear();
-                            postList.addAll(response.body());
+                            List<Post> allPosts = response.body();
+                            List<Post> newestNine = allPosts.size() > 9 ? allPosts.subList(0, 9) : allPosts;
+                            postList.addAll(newestNine);
                             postAdapter.notifyDataSetChanged();
                         } else {
                             Log.e("API_ERROR", "Response error: " + response.code());
                             Toast.makeText(getContext(), "Lỗi tải dữ liệu", Toast.LENGTH_SHORT).show();
                         }
                     }
+
 
                     @Override
                     public void onFailure(Call<List<Post>> call, Throwable t) {

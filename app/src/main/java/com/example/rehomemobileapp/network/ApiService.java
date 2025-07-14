@@ -37,6 +37,13 @@ public interface ApiService {
             @Query("province") String province
     );
 
+    @POST(ApiConstants.LOGIN_WITH_GOOGLE)
+    @FormUrlEncoded
+    Call<LoginResponse> loginWithGoogle(
+            @Field("idToken") String idToken
+    );
+
+
     // Login
     @POST(ApiConstants.LOGIN)
     @FormUrlEncoded

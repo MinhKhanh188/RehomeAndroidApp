@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             textVerified.setVisibility(View.GONE);
         } else {
             textVerified.setVisibility(View.VISIBLE);
-            textVerified.setText("Người dùng chưa xác thực");
+            textVerified.setText("Người dùng vip đã xác thực");
         }
 
         // Setup toolbar and nav
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 🟠 Mail icon FAB click
         binding.appBarMain.fab.setOnClickListener(view -> {
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Tính năng này sẽ được ra mắt sớm", Snackbar.LENGTH_LONG)
                     .setAction("Action", null)
                     .setAnchorView(R.id.fab).show();
         });
