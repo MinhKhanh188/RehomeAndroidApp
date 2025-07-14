@@ -48,10 +48,53 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tại sao nên chọn đồ cũ?"
+                android:text="Tại sao nên chọn đồ cũ tại Re-Home?"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:paddingHorizontal="16dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="- Đảm bảo chất lượng"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="24dp"
+                android:textColor="@color/primary_orange"
+                android:paddingBottom="8dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="- Giá cả phải chăng"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingHorizontal="16dp"
+                android:textColor="@color/primary_orange"
+                android:paddingTop="24dp"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="- Không thu phí giao dịch"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingHorizontal="16dp"
+                android:textColor="@color/primary_orange"
+                android:paddingTop="24dp"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="- Tặng phần quà giá trị đến 100k vnd đối với người dùng tạo tài khoản lần đầu"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingHorizontal="16dp"
+                android:textColor="@color/primary_orange"
                 android:paddingTop="24dp"
                 android:paddingBottom="8dp" />
 
