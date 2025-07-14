@@ -24,11 +24,34 @@ public class SessionManager {
     }
 
     public static void saveUser(Context context, User user) {
+        if (context == null || user == null) return;
+        
         SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String userJson = gson.toJson(user);
+        
         prefs.edit()
+                .putString("user_data", userJson)
                 .putString("user_name", user.getName())
                 .putBoolean("user_verified", user.isVerified())
                 .apply();
+    }
+
+    public static User getUser(Context context) {
+        if (context == null) return null;
+        
+        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        String userJson = prefs.getString("user_data", "");
+        
+        if (userJson.isEmpty()) {
+            return null;
+        }
+        
+        try {
+            return new Gson().fromJson(userJson, User.class);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static String getUserName(Context context) {

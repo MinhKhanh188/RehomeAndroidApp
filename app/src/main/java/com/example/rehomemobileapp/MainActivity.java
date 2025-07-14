@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
 
+import com.example.rehomemobileapp.activities.ProfileActivity;
 import com.example.rehomemobileapp.activities.UploadPostActivity;
 import com.example.rehomemobileapp.data.SessionManager;
 import com.google.android.material.snackbar.Snackbar;
@@ -35,8 +36,27 @@ public class MainActivity extends AppCompatActivity {
         // Load user info from SessionManager
         NavigationView navigationView = binding.navView;
         View headerView = navigationView.getHeaderView(0);
+        View headerContainer = headerView.findViewById(R.id.nav_header_container);
         TextView textName = headerView.findViewById(R.id.textViewUserName);
         TextView textVerified = headerView.findViewById(R.id.textViewVerified);
+
+        // Add click listener to the header container
+        if (headerContainer != null) {
+            headerContainer.setOnClickListener(v -> {
+                DrawerLayout drawer = binding.drawerLayout;
+                drawer.closeDrawers();
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            });
+        } else {
+            // If headerContainer is null, set click listener on the whole headerView
+            headerView.setOnClickListener(v -> {
+                DrawerLayout drawer = binding.drawerLayout;
+                drawer.closeDrawers();
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            });
+        }
 
         String name = SessionManager.getUserName(this);
         boolean isVerified = SessionManager.getIsVerified(this);
