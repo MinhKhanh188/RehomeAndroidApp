@@ -46,6 +46,8 @@ public class UploadPostActivity extends AppCompatActivity {
     ArrayAdapter<String> categoryAdapter, provinceAdapter;
     ApiService apiService;
     SessionManager sessionManager;
+    private View loadingOverlay;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +119,8 @@ public class UploadPostActivity extends AppCompatActivity {
         btnSelectImages = findViewById(R.id.btnSelectImages);
         btnSubmit = findViewById(R.id.btnSubmit);
         imagePreviewContainer = findViewById(R.id.imagePreviewContainer);
+        loadingOverlay = findViewById(R.id.loadingOverlay);
+
     }
 
 
@@ -188,6 +192,7 @@ public class UploadPostActivity extends AppCompatActivity {
     }
 
     private void uploadPost() {
+        loadingOverlay.setVisibility(View.VISIBLE);
         String token = "Bearer " + sessionManager.getAuthToken(this); // Adjust if needed
 
         // Convert fields to RequestBody
@@ -241,6 +246,7 @@ public class UploadPostActivity extends AppCompatActivity {
                 .enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
+                        loadingOverlay.setVisibility(View.GONE);
                         if (response.isSuccessful()) {
                             Toast.makeText(UploadPostActivity.this, "Đăng bài thành công!", Toast.LENGTH_SHORT).show();
                             finish();
