@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_launcher_screen_logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ReHomeMobileApp"
+        android:theme="@style/Theme.ReHomeMobileApp.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 

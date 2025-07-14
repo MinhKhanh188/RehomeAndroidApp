@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
 }
-
+apply(plugin = "com.google.gms.google-services")
 android {
     namespace = "com.example.rehomemobileapp"
     compileSdk = 35
@@ -60,6 +60,11 @@ dependencies {
         exclude(group = "org.json", module = "json")
     }
     implementation("org.json:json:20230618")
+    implementation("com.google.android.gms:play-services-auth:20.7.0") // Google Sign-In
+
+    // Firebase BoM and SDKs (optional, add only if you need Firebase)
+    implementation(platform("com.google.firebase:firebase-bom:33.2.0")) // Use latest BoM version
+    implementation("com.google.firebase:firebase-analytics") // Example Firebase SDK
 }
 
 

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "139914060763",
+    "project_id": "rehomemobileapp",
+    "storage_bucket": "rehomemobileapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139914060763:android:1a5a61dcb2bf62f77bfdfe",
+        "android_client_info": {
+          "package_name": "com.example.rehomemobileapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "139914060763-ib9fsuooug0a15d3vqheet2p26dr86ud.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rehomemobileapp",
+            "certificate_hash": "f2e50b206e87510d07eb8e20acefb700bc8dfd18"
+          }
+        },
+        {
+          "client_id": "139914060763-5g8dkhr0qc8t3f90pk1okku8gitlj8ok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvdmddcwKHlFG6WbYMDGnR4Jt62IDsohM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "139914060763-5g8dkhr0qc8t3f90pk1okku8gitlj8ok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

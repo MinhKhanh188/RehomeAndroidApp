@@ -108,8 +108,8 @@ public class ChatListActivity extends AppCompatActivity {
         Intent intent = new Intent(ChatListActivity.this, ChatActivity.class);
         intent.putExtra("conversationId", conversation.getId());
         intent.putExtra("participant_id", conversation.getOtherParticipantId(currentUserId));
-        intent.putExtra("otherParticipantName", conversation.getOtherParticipantName());
-        intent.putExtra("otherParticipantAvatar", conversation.getOtherParticipantAvatar());
+        intent.putExtra("participant_name", conversation.getOtherParticipantName());
+        intent.putExtra("participant_avatar", conversation.getOtherParticipantAvatar());
         startActivity(intent);
     }
 }

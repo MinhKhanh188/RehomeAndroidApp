@@ -2,6 +2,7 @@ package com.example.rehomemobileapp.activities;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -63,6 +64,8 @@ public class PostDetailActivity extends AppCompatActivity {
         buttonChat = findViewById(R.id.buttonChat);
         mainImagePager = findViewById(R.id.mainImagePager);
         productImagesRecycler = findViewById(R.id.productImagesRecycler);
+        ImageButton buttonBack = findViewById(R.id.buttonBack);
+        buttonBack.setOnClickListener(v -> finish());
 
 
 
