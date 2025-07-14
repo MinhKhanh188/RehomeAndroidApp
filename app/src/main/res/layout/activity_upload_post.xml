@@ -1,173 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <!-- Scrollable Content -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:padding="16dp">
 
-        <!-- Product Name -->
-        <EditText
-            android:id="@+id/edtName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tên sản phẩm*"
-            android:inputType="text" />
-
-        <!-- Price & Original Price on one line -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp"
-            android:weightSum="2">
+            android:orientation="vertical">
 
+            <!-- Product Name -->
             <EditText
-                android:id="@+id/edtPrice"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Giá bán*"
-                android:inputType="numberDecimal"
-                android:layout_marginEnd="8dp" />
-
-            <EditText
-                android:id="@+id/edtOriginalPrice"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Giá gốc "
-                android:inputType="numberDecimal"
-                android:layout_marginStart="8dp" />
-        </LinearLayout>
-
-
-        <!-- Description -->
-        <EditText
-            android:id="@+id/edtDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Mô tả*"
-            android:minLines="3"
-            android:inputType="textMultiLine"
-            android:gravity="top"
-            android:layout_marginTop="12dp" />
-
-        <!-- Province Spinner with Title -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="12dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tỉnh/Thành phố trước khi sát nhập*"
-                android:textSize="14sp"
-                android:textColor="@color/text_primary" />
-
-            <Spinner
-                android:id="@+id/spinnerProvince"
+                android:id="@+id/edtName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-
-        <!-- Address -->
-        <EditText
-            android:id="@+id/edtAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Địa chỉ*"
-            android:inputType="text"
-            android:layout_marginTop="12dp" />
-
-        <!-- Category & Status on same line with titles -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp"
-            android:weightSum="2">
-
-            <!-- Category -->
-            <LinearLayout
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginEnd="8dp">
+                android:hint="Tên sản phẩm*"
+                android:inputType="text" />
+
+            <!-- Price & Original Price on one line -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <EditText
+                    android:id="@+id/edtPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:hint="Giá bán*"
+                    android:inputType="numberDecimal" />
+
+                <EditText
+                    android:id="@+id/edtOriginalPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:hint="Giá gốc "
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
+
+
+            <!-- Description -->
+            <EditText
+                android:id="@+id/edtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="top"
+                android:hint="Mô tả*"
+                android:inputType="textMultiLine"
+                android:minLines="3" />
+
+            <!-- Province Spinner with Title -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Danh mục*"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_primary" />
+                    android:text="Tỉnh/Thành phố trước khi sát nhập*"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
 
                 <Spinner
-                    android:id="@+id/spinnerCategory"
+                    android:id="@+id/spinnerProvince"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <!-- Status -->
-            <LinearLayout
-                android:layout_width="0dp"
+
+            <!-- Address -->
+            <EditText
+                android:id="@+id/edtAddress"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginStart="8dp">
+                android:layout_marginTop="12dp"
+                android:hint="Địa chỉ*"
+                android:inputType="text" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+            <!-- Category & Status on same line with titles -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- Category -->
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Tình trạng*"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_primary" />
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/spinnerStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Danh mục*"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!-- Status -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tình trạng*"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
             </LinearLayout>
+
+
+            <!-- Select Images Button -->
+            <Button
+                android:id="@+id/btnSelectImages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/primary_orange"
+                android:text="Chọn ảnh"
+                android:textColor="@android:color/white" />
+
+            <!-- Image Previews -->
+            <LinearLayout
+                android:id="@+id/imagePreviewContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal" />
+
+            <!-- Submit Button -->
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/primary_orange"
+                android:text="Đăng bài"
+                android:textColor="@android:color/white" />
+
         </LinearLayout>
+    </ScrollView>
+    <!-- Loading Overlay -->
+    <FrameLayout
+        android:id="@+id/loadingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
 
-
-        <!-- Select Images Button -->
-        <Button
-            android:id="@+id/btnSelectImages"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Chọn ảnh"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/primary_orange"
-            android:textColor="@android:color/white"/>
-
-        <!-- Image Previews -->
-        <LinearLayout
-            android:id="@+id/imagePreviewContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            android:scrollbars="horizontal" />
-
-        <!-- Submit Button -->
-        <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Đăng bài"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="@color/primary_orange"
-            android:textColor="@android:color/white" />
-
-    </LinearLayout>
-</ScrollView>
+        <ProgressBar
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center" />
+    </FrameLayout>
+</FrameLayout>
