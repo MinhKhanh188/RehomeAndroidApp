@@ -53,50 +53,108 @@
                 android:textStyle="bold"
                 android:paddingHorizontal="16dp"
                 android:paddingTop="24dp"
-                android:paddingBottom="8dp" />
+                android:paddingBottom="50dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:background="@drawable/benefit_item_background"
+                android:layout_marginBottom="8dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="- Đảm bảo chất lượng"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:paddingHorizontal="16dp"
-                android:paddingTop="24dp"
-                android:textColor="@color/primary_orange"
-                android:paddingBottom="8dp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="- Giá cả phải chăng"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:paddingHorizontal="16dp"
-                android:textColor="@color/primary_orange"
-                android:paddingTop="24dp"
-                android:paddingBottom="8dp" />
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_check_orange"
+                    app:tint="@color/primary_orange"
+                    android:layout_marginEnd="8dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="- Không thu phí giao dịch"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:paddingHorizontal="16dp"
-                android:textColor="@color/primary_orange"
-                android:paddingTop="24dp"
-                android:paddingBottom="8dp" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Đảm bảo chất lượng"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_orange"/>
+            </LinearLayout>
 
-            <TextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="- Tặng phần quà giá trị đến 100k vnd đối với người dùng tạo tài khoản lần đầu"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:paddingHorizontal="16dp"
-                android:textColor="@color/primary_orange"
-                android:paddingTop="24dp"
-                android:paddingBottom="8dp" />
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:background="@drawable/benefit_item_background"
+                android:layout_marginBottom="8dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_check_orange"
+                    app:tint="@color/primary_orange"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Giá cả phải chăng"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_orange"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:background="@drawable/benefit_item_background"
+                android:layout_marginBottom="8dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_check_orange"
+                    app:tint="@color/primary_orange"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Không thu phí giao dịch"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_orange"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:background="@drawable/benefit_item_background"
+                android:layout_marginBottom="8dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_check_orange"
+                    app:tint="@color/primary_orange"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tặng quà đến 100k cho tài khoản mới"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_orange"/>
+            </LinearLayout>
+
 
             <!-- Add more views below -->
 
