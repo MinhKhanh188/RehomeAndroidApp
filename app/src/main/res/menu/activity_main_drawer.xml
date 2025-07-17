@@ -17,10 +17,10 @@
             android:id="@+id/nav_chat"
             android:icon="@android:drawable/ic_menu_send"
             android:title="Chat" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Profile" />
+<!--        <item-->
+<!--            android:id="@+id/nav_slideshow"-->
+<!--            android:icon="@drawable/ic_menu_slideshow"-->
+<!--            android:title="Profile" />-->
         <item
             android:id="@+id/nav_my_listings"
             android:icon="@drawable/ic_menu_gallery"

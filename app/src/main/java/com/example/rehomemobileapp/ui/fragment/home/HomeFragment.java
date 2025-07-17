@@ -1,5 +1,6 @@
 package com.example.rehomemobileapp.ui.fragment.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rehomemobileapp.R;
+import com.example.rehomemobileapp.activities.PostDetailActivity;
 import com.example.rehomemobileapp.adapter.PostAdapter;
 import com.example.rehomemobileapp.model.Post;
 import com.example.rehomemobileapp.network.ApiClient;
@@ -49,10 +51,11 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         postAdapter = new PostAdapter(postList, post -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("postId", post.getId());
-           // NavHostFragment.findNavController(this).navigate(R.id.productDetailsFragment, bundle);
+            Intent intent = new Intent(getContext(), PostDetailActivity.class);
+            intent.putExtra("POST_ID", post.getId());
+            startActivity(intent);
         });
+
         recyclerView.setAdapter(postAdapter);
 
         fetchRecentPosts();
