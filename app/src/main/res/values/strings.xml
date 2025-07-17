@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">ReHomeMobileApp</string>
+    <string name="default_web_client_id">139914060763-ib9fsuooug0a15d3vqheet2p26dr86ud.apps.googleusercontent.com</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -20,4 +21,5 @@
     <string name="minutes_ago">phút trước</string>
     <string name="hours_ago">giờ trước</string>
     <string name="days_ago">ngày trước</string>
+
 </resources>
