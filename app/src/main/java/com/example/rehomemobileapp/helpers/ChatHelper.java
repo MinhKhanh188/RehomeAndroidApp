@@ -33,7 +33,7 @@ public class ChatHelper {
         void onError(String error);
     }
 
-    public void createOrGetConversation(String participantId, final ChatCallback<Conversation> callback) {
+    public void createOrGetConversation(String participantId, String postId,final ChatCallback<Conversation> callback) {
         String token = SessionManager.getAuthToken(context);
         Log.d(TAG, "createOrGetConversation: Token = " + (token != null ? token : "NULL"));
         if (token == null) {
@@ -41,7 +41,7 @@ public class ChatHelper {
             return;
         }
 
-        chatApiService.createOrGetConversation(token, participantId).enqueue(new Callback<Conversation>() {
+        chatApiService.createOrGetConversation(token, participantId, postId).enqueue(new Callback<Conversation>() {
             @Override
             public void onResponse(Call<Conversation> call, Response<Conversation> response) {
                 if (response.isSuccessful() && response.body() != null) {

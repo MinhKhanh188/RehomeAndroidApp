@@ -45,7 +45,13 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
     private List<Message> messageList;
     private Conversation currentConversation;
     private String currentUserId;
+    private String postId;
     private ChatHelper chatHelper;
+
+    public String getCurrentConversationId() {
+        return currentConversation != null ? currentConversation.getId() : null;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +63,32 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
         setupRecyclerView();
         setupClickListeners();
 
+        SocketManager socketManager = SocketManager.getInstance();
+        socketManager.setListener(this);   // ✅ correct
+        socketManager.connect();           // ✅ correct
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         SocketManager.getInstance().setListener(this);
-        SocketManager.getInstance().connect();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SocketManager.clearListener();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        SocketManager.clearListener();
         SocketManager.getInstance().disconnect();
     }
+
+
 
     private void initViews() {
         recyclerViewMessages = findViewById(R.id.recyclerViewMessages);
@@ -83,8 +106,6 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
     private void initData() {
         currentUserId = SessionManager.getUserId(getApplicationContext());
 
-
-
         if (TextUtils.isEmpty(currentUserId)) {
             Toast.makeText(this, "Lỗi: Token hoặc User ID không có. Vui lòng đăng nhập lại.", Toast.LENGTH_LONG).show();
             finish();
@@ -93,12 +114,13 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
 
         chatHelper = new ChatHelper(this);
 
-        // Get conversation details from intent
+        // Get data from Intent
         Intent intent = getIntent();
         String conversationId = intent.getStringExtra("conversationId");
         String otherParticipantId = intent.getStringExtra("participant_id");
-        String otherParticipantName = intent.getStringExtra("participant_name"); // 💡 fixed key
-        String otherParticipantAvatar = intent.getStringExtra("participant_avatar"); // optional for future
+        String otherParticipantName = intent.getStringExtra("participant_name");
+        String otherParticipantAvatar = intent.getStringExtra("participant_avatar");
+        String postId = intent.getStringExtra("post_id"); // 💡 New
 
         if (otherParticipantId == null) {
             Toast.makeText(this, "Lỗi: Không có thông tin người tham gia chat", Toast.LENGTH_LONG).show();
@@ -107,12 +129,12 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
         }
 
         if (conversationId == null) {
-            chatHelper.createOrGetConversation(otherParticipantId, new ChatHelper.ChatCallback<Conversation>() {
+            chatHelper.createOrGetConversation(otherParticipantId, postId, new ChatHelper.ChatCallback<Conversation>() {
                 @Override
                 public void onSuccess(Conversation conversation) {
                     runOnUiThread(() -> {
                         currentConversation = conversation;
-                        setupChatUIAndLoadMessages(otherParticipantName, otherParticipantAvatar); // ✅ show name
+                        setupChatUIAndLoadMessages(otherParticipantName, otherParticipantAvatar);
                     });
                 }
 
@@ -133,10 +155,10 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
             currentConversation.setOtherParticipantAvatar(otherParticipantAvatar);
             currentConversation.setDisplayName(otherParticipantName);
             currentConversation.setAvatar(otherParticipantAvatar);
-            setupChatUIAndLoadMessages(otherParticipantName, otherParticipantAvatar); // ✅ show name
+            setupChatUIAndLoadMessages(otherParticipantName, otherParticipantAvatar);
         }
-
     }
+
 
     private void setupRecyclerView() {
         messageList = new ArrayList<>();
@@ -188,26 +210,25 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
         String messageText = editTextMessage.getText().toString().trim();
 
         if (!TextUtils.isEmpty(messageText) && currentConversation != null) {
-            Message newMessage = new Message(
-                    String.valueOf(System.currentTimeMillis()),
-                    currentConversation.getId(),
-                    currentUserId,
-                    messageText,
-                    new Date(),
-                    true,
-                    "",
-                    ""
-            );
-
-            messageList.add(newMessage);
-            messageAdapter.notifyItemInserted(messageList.size() - 1);
-            recyclerViewMessages.scrollToPosition(messageList.size() - 1);
             editTextMessage.setText("");
 
+            // Emit through REST API
             chatHelper.sendMessage(currentConversation.getId(), messageText, new ChatHelper.ChatCallback<Message>() {
                 @Override
                 public void onSuccess(Message message) {
                     Log.d(TAG, "Message sent successfully via API");
+
+                    // Send through socket only after API confirms save
+                    JSONObject messageData = new JSONObject();
+                    try {
+                        messageData.put("conversationId", currentConversation.getId());
+                        messageData.put("senderId", currentUserId);
+                        messageData.put("text", messageText);
+                        SocketManager.getInstance().emit("send_message", messageData);
+                    } catch (JSONException e) {
+                        Log.e(TAG, "Error creating message JSON: " + e.getMessage());
+                    }
+
                     runOnUiThread(() -> {
                         currentConversation.setLastMessage(message);
                         currentConversation.setLastMessageTime(new Date());
@@ -216,28 +237,16 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
 
                 @Override
                 public void onError(String error) {
-                    runOnUiThread(() -> {
-                        Log.e(TAG, "Error sending message via API: " + error);
-                        Toast.makeText(ChatActivity.this, "Không thể gửi tin nhắn", Toast.LENGTH_SHORT).show();
-                        if (messageList.size() > 0 && messageList.get(messageList.size() - 1).getId().equals(newMessage.getId())) {
-                            messageList.remove(messageList.size() - 1);
-                            messageAdapter.notifyItemRemoved(messageList.size());
-                        }
-                    });
+                    Log.e(TAG, "Error sending message: " + error);
+                    runOnUiThread(() ->
+                            Toast.makeText(ChatActivity.this, "Không thể gửi tin nhắn", Toast.LENGTH_SHORT).show()
+                    );
                 }
             });
-
-            JSONObject messageData = new JSONObject();
-            try {
-                messageData.put("conversationId", currentConversation.getId());
-                messageData.put("senderId", currentUserId);
-                messageData.put("text", messageText);
-                SocketManager.getInstance().emit("send_message", messageData);
-            } catch (JSONException e) {
-                Log.e(TAG, "Error creating message JSON: " + e.getMessage());
-            }
         }
     }
+
+
 
     @Override
     public void onConnect() {
@@ -254,6 +263,8 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
         Log.d(TAG, "Received message: " + message.getText());
         runOnUiThread(() -> {
             if (currentConversation != null && message.getConversationId().equals(currentConversation.getId())) {
+
+                // ✅ Check if message already exists (by ID)
                 boolean messageExists = false;
                 for (Message m : messageList) {
                     if (m.getId() != null && m.getId().equals(message.getId())) {
@@ -262,6 +273,7 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
                     }
                 }
 
+                // ✅ If it's not already in the list, add it
                 if (!messageExists) {
                     message.setSent(message.getSenderId().equals(currentUserId));
                     messageList.add(message);
@@ -275,16 +287,18 @@ public class ChatActivity extends AppCompatActivity implements SocketManager.Soc
         });
     }
 
+
+
     @Override
     public void onConnectError(String error) {
         Log.e(TAG, "Socket Connection Error: " + error);
         runOnUiThread(() -> {
-            Toast.makeText(this, "Lỗi kết nối real-time", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Mạng yếu", Toast.LENGTH_SHORT).show();
         });
     }
 
     public void startConversationWithUser(String participantId) {
-        chatHelper.createOrGetConversation(participantId, new ChatHelper.ChatCallback<Conversation>() {
+        chatHelper.createOrGetConversation(participantId, postId, new ChatHelper.ChatCallback<Conversation>() {
             @Override
             public void onSuccess(Conversation conversation) {
                 runOnUiThread(() -> {

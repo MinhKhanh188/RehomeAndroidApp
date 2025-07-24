@@ -1,5 +1,7 @@
 package com.example.rehomemobileapp.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class Message {
@@ -11,6 +13,9 @@ public class Message {
     private boolean isSent;
     private String senderName;
     private String senderAvatar;
+    private String type = "text";
+    @SerializedName("post")
+    private Post post;
 
     public Message() {
     }
@@ -22,7 +27,6 @@ public class Message {
         this.isSent = isSent;
     }
 
-    // Constructor for backward compatibility with timestamp as long
     public Message(String id, String text, long timestamp, boolean isSent) {
         this.id = id;
         this.text = text;
@@ -30,7 +34,6 @@ public class Message {
         this.isSent = isSent;
     }
 
-    // Constructor with senderId for backward compatibility
     public Message(String id, String text, long timestamp, boolean isSent, String senderId) {
         this.id = id;
         this.text = text;
@@ -39,7 +42,6 @@ public class Message {
         this.senderId = senderId;
     }
 
-    // Constructor with senderId and empty senderName/senderAvatar
     public Message(String id, String text, long timestamp, boolean isSent, String senderId, String senderName, String senderAvatar) {
         this.id = id;
         this.text = text;
@@ -68,8 +70,19 @@ public class Message {
         this.isSent = isSent;
         this.senderName = senderName;
         this.senderAvatar = senderAvatar;
+        this.type = "text";  // default
     }
 
+    // ✨ Add getter and setter for post
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    // Getters & setters
     public String getId() {
         return id;
     }
@@ -118,6 +131,11 @@ public class Message {
         isSent = sent;
     }
 
+    public String getType() {
+        return type;
+    }
+
+
     public String getSenderName() {
         return senderName;
     }
@@ -133,11 +151,16 @@ public class Message {
     public void setSenderAvatar(String senderAvatar) {
         this.senderAvatar = senderAvatar;
     }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getContent() {
         return text;
     }
+
     public long getTimestamp() {
         return sentAt != null ? sentAt.getTime() : 0;
     }
 }
-

@@ -22,7 +22,8 @@ public interface ChatApiService {
     @FormUrlEncoded
     Call<Conversation> createOrGetConversation(
             @Header("Authorization") String token,
-            @Field("participantId") String participantId
+            @Field("participantId") String participantId,
+            @Field("postId") String postId
     );
 
     // Gửi tin nhắn

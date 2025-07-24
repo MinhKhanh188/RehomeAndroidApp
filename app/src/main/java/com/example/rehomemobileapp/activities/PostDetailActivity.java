@@ -33,15 +33,12 @@ import retrofit2.Response; // This is the main one!
 
 
 public class PostDetailActivity extends AppCompatActivity {
-
     private RecyclerView productImagesRecycler;
     private TextView productTitle, productPrice, productDescription;
     private Button buttonChat;
     private ProgressBar progressBar;
-
     private String sellerId;
     private String sellerName;
-
     private ImageView mainProductImage;
     private ViewPager2 mainImagePager;
 
@@ -56,7 +53,6 @@ public class PostDetailActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_post_detail);
 
-
         productImagesRecycler = findViewById(R.id.productImagesRecycler);
         productTitle = findViewById(R.id.productTitle);
         productPrice = findViewById(R.id.productPrice);
@@ -66,10 +62,6 @@ public class PostDetailActivity extends AppCompatActivity {
         productImagesRecycler = findViewById(R.id.productImagesRecycler);
         ImageButton buttonBack = findViewById(R.id.buttonBack);
         buttonBack.setOnClickListener(v -> finish());
-
-
-
-
 
         String postId = getIntent().getStringExtra("POST_ID");
 
@@ -112,9 +104,6 @@ public class PostDetailActivity extends AppCompatActivity {
                             }
 
 
-
-
-
                             sellerId = post.getSellerId();
                             sellerName = post.getSellerName();
                         }
@@ -132,9 +121,13 @@ public class PostDetailActivity extends AppCompatActivity {
             return;
         }
 
+        String postId = getIntent().getStringExtra("POST_ID"); // ✅ get postId from intent again
+
         Intent intent = new Intent(PostDetailActivity.this, ChatActivity.class);
         intent.putExtra("participant_id", sellerId);
         intent.putExtra("participant_name", sellerName);
+        intent.putExtra("post_id", postId); // ✅ pass postId to ChatActivity
         startActivity(intent);
     }
+
 }
