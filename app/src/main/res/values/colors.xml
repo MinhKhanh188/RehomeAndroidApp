@@ -15,7 +15,7 @@
     <color name="primary_orange_dark">#E55A2B</color>
     <color name="background_gray">#F5F5F5</color>
     <color name="chat_background">#F8F8F8</color>
-    <color name="message_sent">#FF6B35</color>
+    <color name="message_sent">#EAFF6B35</color>
     <color name="message_received">#FFFFFF</color>
     <color name="text_primary">#333333</color>
     <color name="text_secondary">#666666</color>
